@@ -1,0 +1,11 @@
+{
+    "name": "webfactory/kernelintegration-bundle",
+    "autoload": {
+        "psr-0": { "Webfactory\\Bundle\\KernelIntegrationBundle": "" }
+    },
+    "target-dir": "Webfactory/Bundle/KernelIntegrationBundle",
+    "require": {
+        "symfony/css-selector": "2.0.10",
+        "symfony/dom-crawler": "2.0.10"
+    }
+}
