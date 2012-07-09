@@ -22,5 +22,10 @@
             <argument type="service" id="webfactory.legacy_integration.legacy_application" />
             <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
         </service>
+
+        <service class="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">
+            <argument type="service" id="webfactory.legacy_integration.legacy_application" />
+            <tag name="twig.extension" />
+        </service>
     </services>
 </container>
