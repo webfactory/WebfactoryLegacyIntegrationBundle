@@ -13,7 +13,7 @@ class FragmentalResponse extends Response {
         $html = '';
         if ($crawler = $this->getCrawler()) {
             foreach ($crawler->filter($expression) as $node) {
-                $html .= $node->ownerDocument->saveXML($node);
+                $html .= $node->ownerDocument->saveHTML($node);
             }
         }
 
