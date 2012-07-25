@@ -20,7 +20,8 @@
 
         <service id="webfactory.legacy_integration.recycling_event_listener" class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\RecyclingEventListener">
             <argument type="service" id="webfactory.legacy_integration.legacy_application" />
-            <tag name="kernel.event_listener" event="kernel.request" method="onKernelRequest" />
+            <argument type="service" id="annotation_reader"/>
+            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
 
         <service class="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">

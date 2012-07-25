@@ -13,7 +13,6 @@ class RetrofittingEventListener {
 
     protected $symfonyApplication;
     protected $legacyApplication;
-    protected $legacyApplicationIsDispatched = false;
 
     public function __construct(SymfonyApplication $symfonyApplication, LegacyApplication $legacyApplication) {
         $this->symfonyApplication = $symfonyApplication;
@@ -23,12 +22,12 @@ class RetrofittingEventListener {
     public function onKernelException(GetResponseForExceptionEvent $event) {
         if (($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) ||
             (!($event->getException() instanceof NotFoundHttpException)) ||
-            ($this->legacyApplicationIsDispatched))
+            ($this->legacyApplication->isDispatched()))
             return;
 
         try {
 
-            $this->legacyApplicationIsDispatched = true;
+            $this->legacyApplication->dispatch();
             $event->setResponse($this->legacyApplication->getResponse());
 
         } catch(\Exception $e) {
@@ -42,14 +41,14 @@ class RetrofittingEventListener {
         $response = $event->getResponse();
 
         if (($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) ||
-            ($this->legacyApplicationIsDispatched) ||
+            ($this->legacyApplication->isDispatched()) ||
             ($response->isRedirect()) ||
             (stripos($response->headers->get('Content-Type'), 'text/html') === false) ||
             (!$response->isOk()))
             return;
 
         $this->symfonyApplication->setResponse($response);
-        $this->legacyApplicationIsDispatched = true;
+        $this->legacyApplication->dispatch();
         $event->setResponse($this->legacyApplication->getResponse());
     }
 

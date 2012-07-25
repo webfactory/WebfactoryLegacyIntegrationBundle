@@ -7,14 +7,20 @@ use Symfony\Component\HttpFoundation\Response;
 class LegacyApplication extends IntegratableApplication {
 
     protected $bootstrapFile;
+    protected $dispatched = false;
     protected $response;
 
     public function __construct($bootstrapFile) {
         $this->bootstrapFile = $bootstrapFile;
     }
 
-    public function getResponse() {
-        if (!$this->response) {
+    public function isDispatched() {
+        return $this->dispatched;
+    }
+
+    public function dispatch() {
+        if (!$this->dispatched) {
+            $this->dispatched = true;
             $legacyBootstrap = $this->bootstrapFile;
 
             ob_start();
@@ -45,7 +51,13 @@ class LegacyApplication extends IntegratableApplication {
 
             $this->response = new Response($content, $statusCode, $responseHeaders);
         }
-        return $this->response;
+    }
+
+    public function getResponse() {
+        if ($this->response)
+            return $this->response;
+
+        throw new \Exception("Die Altanweung hat noch keine Response generiert. Eventuell fehlt die Annotation /** @IntegrateLegacyApplication */ an der aktuellen Controller-Action?");
     }
 
 }

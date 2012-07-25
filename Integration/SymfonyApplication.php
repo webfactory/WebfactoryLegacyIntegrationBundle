@@ -13,7 +13,10 @@ class SymfonyApplication extends IntegratableApplication {
     }
 
     public function getResponse() {
-        return $this->response;
+        if ($this->response)
+            return $this->response;
+
+        throw new \Exception("Die eigentliche Symfony-Response wurde noch nicht generiert!");
     }
 
 }
