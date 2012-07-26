@@ -3,6 +3,7 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class LegacyApplication extends IntegratableApplication {
 
@@ -42,14 +43,19 @@ class LegacyApplication extends IntegratableApplication {
             $headers = headers_list();
             $responseHeaders = array();
             foreach ($headers as $header) {
-                $header = preg_match('(^[^:]+:(.*)$)', $header, $matches);
+                $header = preg_match('(^([^:]+):(.*)$)', $header, $matches);
                 $headerName = $matches[1];
                 $headerValue = $matches[2];
                 $responseHeaders[$headerName][] = $headerValue;
             }
             header_remove();
-
-            $this->response = new Response($content, $statusCode, $responseHeaders);
+            
+            if (isset($responseHeaders['Location'])) {
+                $statusCode = '302';
+                unset($responseHeaders['Expires']);
+            } 
+            
+            $this->response = new Response($content, $statusCode, $responseHeaders);                
         }
     }
 

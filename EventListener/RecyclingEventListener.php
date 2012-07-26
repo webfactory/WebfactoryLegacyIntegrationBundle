@@ -38,8 +38,16 @@ class RecyclingEventListener {
             }
         }
 
-        if ($integrate)
-            $this->legacyApplication->dispatch();
+        if (!$integrate)
+            return;
+        
+        $this->legacyApplication->dispatch();
+        $response = $this->legacyApplication->getResponse();
+        if ($response->isRedirect()) {
+            $event->setController(function() use ($response) {
+                return $response;
+            });
+        }
     }
 
 }
