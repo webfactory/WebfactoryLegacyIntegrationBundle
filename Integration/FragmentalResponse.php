@@ -16,18 +16,9 @@ class FragmentalResponse extends Response {
     }
 
     public function getFragment($expression) {
-        $html = '';
-
         if ($document = $this->getDocument()) {
-            $xpath = new \DOMXPath($document);
-            $xpath->registerNamespace('html', 'http://www.w3.org/1999/xhtml');
-            // TODO: Automatisch alle Namespaces registrieren...
-            foreach ($xpath->query($expression) as $node) {
-                $html .= $this->parser->dumpElement($node);
-            }
+           return $this->parser->queryXPath($document, $expression);
         }
-
-        return $html;
     }
 
     protected function getDocument() {
