@@ -3,31 +3,34 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\DomCrawler\Crawler;
+use Webfactory\Dom\PolyglotHTML5Parser;
 
 class FragmentalResponse extends Response {
 
-    protected $crawler;
+    protected $document;
 
     public function getFragment($expression) {
         $html = '';
-        if ($crawler = $this->getCrawler()) {
-            foreach ($crawler->filter($expression) as $node) {
-                $html .= $node->ownerDocument->saveXML($node);
+
+        $parser = new PolyglotHTML5Parser();
+        if ($document = $this->getDocument()) {
+            $xpath = new \DOMXPath($document);
+            $xpath->registerNamespace('html', 'http://www.w3.org/1999/xhtml');
+            // TODO: Automatisch alle Namespaces registrieren...
+            foreach ($xpath->query($expression) as $node) {
+                $html .= $parser->dumpElement($node);
             }
         }
 
         return $html;
     }
 
-    protected function getCrawler() {
-        if (!$this->crawler) {
-            $this->prepare();
-            $this->crawler = new Crawler();
-            $this->crawler->addContent($this->getContent(), $this->headers->get('Content-Type'));
+    protected function getDocument() {
+        if (!$this->document) {
+            $parser = new PolyglotHTML5Parser();
+            $this->document = $parser->parseDocument($this->getContent());
         }
-
-        return $this->crawler;
+        return $this->document;
     }
 
 }
