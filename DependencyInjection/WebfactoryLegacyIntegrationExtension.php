@@ -30,6 +30,10 @@ class WebfactoryLegacyIntegrationExtension extends Extension {
                 throw new \Symfony\Component\DependencyInjection\Exception\RuntimeException("Unbekannte Integrationsstrategie {$config['strategy']}.");
                 break;
         }
+
+        if (@$config['mode'] === 'html5') {
+            $container->setParameter('webfactory.legacy_integration.parser.class', 'Webfactory\Dom\PolyglotHTML5Parser');
+        }
     }
 
 }

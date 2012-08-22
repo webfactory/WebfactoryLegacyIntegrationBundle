@@ -13,7 +13,9 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->root('webfactory_legacy_integration')
             ->children()
                 ->scalarNode('legacyApplicationBootstrapFile')->defaultValue('%project.webdir%/wfD2Engine.php')->end()
-                ->scalarNode('strategy')->defaultValue('recycling')->end();
+                ->scalarNode('strategy')->defaultValue('recycling')->end()
+                ->scalarNode('mode')->defaultValue('xhtml10')->end();
+
         return $treeBuilder;
     }
 }
