@@ -4,6 +4,7 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
+use Webfactory\Dom\BaseParser;
 
 class LegacyApplication extends IntegratableApplication {
 
@@ -11,8 +12,9 @@ class LegacyApplication extends IntegratableApplication {
     protected $dispatched = false;
     protected $response;
 
-    public function __construct($bootstrapFile) {
+    public function __construct($bootstrapFile, BaseParser $parser) {
         $this->bootstrapFile = $bootstrapFile;
+        parent::__construct($parser);
     }
 
     public function isDispatched() {

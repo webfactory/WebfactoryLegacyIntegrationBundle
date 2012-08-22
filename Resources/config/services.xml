@@ -4,12 +4,19 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
+    <parameters>
+        <parameter key="webfactory.legacy_integration.parser.class">Webfactory\Dom\XHTML10Parser</parameter>
+    </parameters>
+
     <services>
         <service id="webfactory.legacy_integration.legacy_application" class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication">
             <argument>%webfactory.legacy_integration.legacy_application_bootstrap_file%</argument>
+            <argument type="service" id="webfactory.legacy_integration.parser" />
         </service>
 
-        <service id="webfactory.legacy_integration.symfony_application" class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\SymfonyApplication" />
+        <service id="webfactory.legacy_integration.symfony_application" class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\SymfonyApplication">
+            <argument type="service" id="webfactory.legacy_integration.parser" />
+        </service>
 
         <service id="webfactory.legacy_integration.retrofitting_event_listener" class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\RetrofittingEventListener">
             <argument type="service" id="webfactory.legacy_integration.symfony_application" />
@@ -23,6 +30,8 @@
             <argument type="service" id="annotation_reader"/>
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
+
+        <service id="webfactory.legacy_integration.parser" class="%webfactory.legacy_integration.parser.class%" />
 
         <service class="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">
             <argument type="service" id="webfactory.legacy_integration.legacy_application" />
