@@ -1,11 +1,11 @@
 {
+
     "name": "webfactory/legacyintegration-bundle",
     "autoload": {
         "psr-0": { "Webfactory\\Bundle\\LegacyIntegrationBundle": "" }
     },
     "target-dir": "Webfactory/Bundle/LegacyIntegrationBundle",
     "require": {
-        "symfony/css-selector": "2.0.10",
-        "symfony/dom-crawler": "2.0.10"
+	"webfactory/dom": "1.0.*"
     }
 }
