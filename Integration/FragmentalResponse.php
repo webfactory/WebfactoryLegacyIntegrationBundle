@@ -17,7 +17,12 @@ class FragmentalResponse extends Response {
 
     public function getFragment($expression) {
         if ($document = $this->getDocument()) {
-           return $this->parser->queryXPath($document, $expression);
+            $xpath = $this->parser->createXPath($document);
+            $xml = '';
+            foreach ($xpath->query($expression) as $node) {
+                $xml .= $this->parser->dumpElement($node);
+            }
+            return $xml;
         }
     }
 
