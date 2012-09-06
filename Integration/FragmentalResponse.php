@@ -20,7 +20,7 @@ class FragmentalResponse extends Response {
             $xpath = $this->parser->createXPath($document);
             $xml = '';
             foreach ($xpath->query($expression) as $node) {
-                $xml .= $this->parser->dumpElement($node);
+                $xml .= $this->parser->dump($node);
             }
             return $xml;
         }

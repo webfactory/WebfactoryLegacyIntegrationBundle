@@ -3,13 +3,13 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\FragmentalResponse;
-use Webfactory\Dom\BaseParser;
+use Webfactory\Dom\BaseParsingHelper;
 
 abstract class IntegratableApplication {
 
     protected $parser;
 
-    public function __construct(BaseParser $parser) {
+    public function __construct(BaseParsingHelper $parser) {
         $this->parser = $parser;
     }
 

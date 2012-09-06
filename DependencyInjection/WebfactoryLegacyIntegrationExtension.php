@@ -32,7 +32,7 @@ class WebfactoryLegacyIntegrationExtension extends Extension {
         }
 
         if (@$config['mode'] === 'html5') {
-            $container->setParameter('webfactory.legacy_integration.parser.class', 'Webfactory\Dom\PolyglotHTML5Parser');
+            $container->setParameter('webfactory.legacy_integration.parser.class', 'Webfactory\Dom\PolyglotHTML5ParsingHelper');
         }
     }
 
