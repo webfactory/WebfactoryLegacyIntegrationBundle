@@ -43,7 +43,7 @@ class RecyclingEventListener {
         
         $this->legacyApplication->dispatch();
         $response = $this->legacyApplication->getResponse();
-        if ($response->isRedirect()) {
+        if ($response->isRedirect() || $response->headers->has('X-webfactory-integration-disabled')) {
             $event->setController(function() use ($response) {
                 return $response;
             });
