@@ -46,8 +46,8 @@ class LegacyApplication extends IntegratableApplication {
             $responseHeaders = array();
             foreach ($headers as $header) {
                 $header = preg_match('(^([^:]+):(.*)$)', $header, $matches);
-                $headerName = $matches[1];
-                $headerValue = $matches[2];
+                $headerName = trim($matches[1]);
+                $headerValue = trim($matches[2]);
                 $responseHeaders[$headerName][] = $headerValue;
             }
             header_remove();

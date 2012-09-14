@@ -44,7 +44,6 @@ class RecyclingEventListener {
         $this->legacyApplication->dispatch();
         $response = $this->legacyApplication->getResponse();
         if ($response->isRedirect() || $response->headers->has('X-webfactory-integration-disabled')) {
-            $response->setExpires(new \DateTime('yesterday'));
             $event->setController(function() use ($response) {
                 return $response;
             });
