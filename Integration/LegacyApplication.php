@@ -65,7 +65,7 @@ class LegacyApplication extends IntegratableApplication {
         if ($this->response)
             return $this->response;
 
-        throw new \Exception("Die Altanweung hat noch keine Response generiert. Eventuell fehlt die Annotation /** @IntegrateLegacyApplication */ an der aktuellen Controller-Action?");
+        throw new \Exception("Die Altanwendung hat noch keine Response generiert. Eventuell fehlt die Annotation /** @Dispatch */ an der aktuellen Controller-Action?");
     }
 
 }

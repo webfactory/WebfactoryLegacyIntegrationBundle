@@ -13,8 +13,12 @@ class Configuration implements ConfigurationInterface
         $treeBuilder->root('webfactory_legacy_integration')
             ->children()
                 ->scalarNode('legacyApplicationBootstrapFile')->defaultValue('%project.webdir%/wfD2Engine.php')->end()
-                ->scalarNode('strategy')->defaultValue('recycling')->end()
-                ->scalarNode('mode')->defaultValue('xhtml10')->end();
+                ->scalarNode('parsingMode')
+                    ->isRequired()
+                    ->validate()
+                        ->ifNotInArray(array('html5', 'xhtml10'))
+                        ->thenInvalid('Invalid parsing mode (choose html5 or xhtm10)')
+                ->end();
 
         return $treeBuilder;
     }

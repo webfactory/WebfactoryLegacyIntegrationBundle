@@ -18,21 +18,13 @@ class WebfactoryLegacyIntegrationExtension extends Extension {
         $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
 
-        switch ($config['strategy']) {
-            case 'recycling':
-                $container->removeDefinition('webfactory.legacy_integration.retrofitting_event_listener');
-                $container->removeDefinition('webfactory.legacy_integration.symfony_application');
+        switch (@$config['parsingMode']) {
+            case 'html5':
+                $container->setParameter('webfactory.legacy_integration.parser_class', 'Webfactory\Dom\PolyglotHTML5ParsingHelper');
                 break;
-            case 'retrofitting':
-                $container->removeDefinition('webfactory.legacy_integration.recycling_event_listener');
+            case 'xhtml10':
+                $container->setParameter('webfactory.legacy_integration.parser_class', 'Webfactory\Dom\XHTML10ParsingHelper');
                 break;
-            default:
-                throw new \Symfony\Component\DependencyInjection\Exception\RuntimeException("Unbekannte Integrationsstrategie {$config['strategy']}.");
-                break;
-        }
-
-        if (@$config['mode'] === 'html5') {
-            $container->setParameter('webfactory.legacy_integration.parser.class', 'Webfactory\Dom\PolyglotHTML5ParsingHelper');
         }
     }
 
