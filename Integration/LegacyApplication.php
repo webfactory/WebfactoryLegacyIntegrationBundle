@@ -52,6 +52,10 @@ class LegacyApplication extends IntegratableApplication {
             }
             header_remove();
             
+            if (isset($_SESSION)) {
+                session_regenerate_id();
+            }
+            
             if (isset($responseHeaders['Location'])) {
                 $statusCode = '302';
                 unset($responseHeaders['Expires']);
