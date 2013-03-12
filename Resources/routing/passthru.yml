@@ -1,0 +1,6 @@
+passthru:
+    path: /{path}
+    requirements:
+        path: .*
+    defaults:
+        _controller: WebfactoryLegacyIntegrationBundle:Passthru:index
