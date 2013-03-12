@@ -3,7 +3,7 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Webfactory\Dom\BaseParsingHelper;
 
 class LegacyApplication extends IntegratableApplication {
@@ -51,10 +51,6 @@ class LegacyApplication extends IntegratableApplication {
                 $responseHeaders[$headerName][] = $headerValue;
             }
             header_remove();
-            
-            if (isset($_SESSION)) {
-                session_regenerate_id();
-            }
             
             if (isset($responseHeaders['Location'])) {
                 $statusCode = '302';
