@@ -7,5 +7,11 @@
     "target-dir": "Webfactory/Bundle/LegacyIntegrationBundle",
     "require": {
 	"webfactory/dom": "1.0.*"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-default": "1.0.x-dev"
+        }
     }
+
 }
