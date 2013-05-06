@@ -6,15 +6,26 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Webfactory\Dom\BaseParsingHelper;
 
-class LegacyApplication extends IntegratableApplication {
+class LegacyApplication {
 
+    protected $parser;
     protected $bootstrapFile;
     protected $dispatched = false;
     protected $response;
 
     public function __construct($bootstrapFile, BaseParsingHelper $parser) {
         $this->bootstrapFile = $bootstrapFile;
-        parent::__construct($parser);
+        $this->parser = $parser;
+    }
+
+    public function getFragmentalResponse() {
+        $response = $this->getResponse();
+        return new FragmentalResponse(
+            $this->parser,
+            $response->getContent(),
+            $response->getStatusCode(),
+            $response->headers->all()
+        );
     }
 
     public function isDispatched() {
