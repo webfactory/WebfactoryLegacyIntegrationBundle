@@ -13,8 +13,9 @@ class LegacyCaptureResponseFactory {
         ob_start();
         $statusCode = call_user_func($legacyExecutionCallback) ? : 200;
 
-        if (headers_sent())
-            throw new \RuntimeException("It must be possible to caputure the legacy application's output with ob_start(). Headers and/or output must not have been sent to the client.");
+        if (headers_sent()) {
+            throw new LegacyIntegrationException("It must be possible to caputure the legacy application's output with ob_start(). Headers and/or output must not have been sent to the client.");
+        }
 
         $content = ob_get_contents();
         ob_end_clean();

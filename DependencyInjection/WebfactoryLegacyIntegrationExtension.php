@@ -2,6 +2,7 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\DependencyInjection;
 
+use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;
@@ -25,6 +26,19 @@ class WebfactoryLegacyIntegrationExtension extends Extension {
             case 'xhtml10':
                 $container->setParameter('webfactory.legacy_integration.parser_class', 'Webfactory\Dom\XHTML10ParsingHelper');
                 break;
+        }
+
+        if (isset($config['legacyApplicationBootstrapFile'])) {
+
+            $wrap = new Definition(
+                'Webfactory\Bundle\LegacyIntegrationBundle\Integration\BootstrapFileKernelAdaptor',
+                array($config['legacyApplicationBootstrapFile'])
+            );
+
+            $container
+                    ->getDefinition('webfactory.legacy_integration.legacy_application')
+                    ->addMethodCall('setLegacyKernel', array($wrap));
+
         }
     }
 

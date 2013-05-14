@@ -4,51 +4,37 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Debug\Stopwatch;
+use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Webfactory\Dom\BaseParsingHelper;
 
-class LegacyApplication {
+class LegacyApplication implements HttpKernelInterface {
 
-    protected $parser;
-    protected $bootstrapFile;
-    protected $dispatched = false;
+    /** @var Response */
     protected $response;
 
-    public function __construct($bootstrapFile, BaseParsingHelper $parser) {
-        $this->bootstrapFile = $bootstrapFile;
-        $this->parser = $parser;
+    /** @var HttpKernelInterface */
+    protected $legacyKernel;
+
+    public function setLegacyKernel(HttpKernelInterface $kernel) {
+        $this->legacyKernel = $kernel;
     }
 
-    public function getFragmentalResponse() {
-        $response = $this->getResponse();
-        return new FragmentalResponse(
-            $this->parser,
-            $response->getContent(),
-            $response->getStatusCode(),
-            $response->headers->all()
-        );
+    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true) {
+        return $this->response = $this->legacyKernel->handle($request, $type, $catch);
     }
 
     public function isDispatched() {
-        return $this->dispatched;
+        return null !== $this->response;
     }
 
-    public function dispatch() {
-        if (!$this->dispatched) {
-            $this->dispatched = true;
-
-            $legacyBootstrap = $this->bootstrapFile;
-
-            $this->response = LegacyCaptureResponseFactory::create(function() use ($legacyBootstrap) {
-                include($legacyBootstrap);
-            });
-        }
-    }
-
+    /** @return Response */
     public function getResponse() {
-        if ($this->response)
-            return $this->response;
+        if (null === $this->response) {
+            throw new LegacyIntegrationException("The legacy application has not been started or has not generated a response. Maybe the @Dispatch annotation is missing for the current controller?");
+        }
 
-        throw new \Exception("Die Altanwendung hat noch keine Response generiert. Eventuell fehlt die Annotation /** @Dispatch */ an der aktuellen Controller-Action?");
+        return $this->response;
     }
 
 }

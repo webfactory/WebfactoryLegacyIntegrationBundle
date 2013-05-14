@@ -1,13 +1,17 @@
 {
 
     "name": "webfactory/legacyintegration-bundle",
+
     "autoload": {
         "psr-0": { "Webfactory\\Bundle\\LegacyIntegrationBundle": "" }
     },
+
     "target-dir": "Webfactory/Bundle/LegacyIntegrationBundle",
+
     "require": {
-	"webfactory/dom": "1.0.*"
+	"webfactory/dom": "~1.0, >= 1.0.15"
     },
+
     "extra": {
         "branch-alias": {
             "dev-default": "1.0.x-dev"

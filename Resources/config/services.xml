@@ -4,14 +4,17 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
-        <service id="webfactory.legacy_integration.legacy_application" class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication">
-            <argument>%webfactory.legacy_integration.legacy_application_bootstrap_file%</argument>
-            <argument type="service" id="webfactory.legacy_integration.parser" />
+
+        <service
+                id="webfactory.legacy_integration.legacy_application"
+                class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication"
+                public="true">
         </service>
 
-        <service id="webfactory.legacy_integration.kernel_event_listener" class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\KernelEventListener">
-            <argument type="service" id="webfactory.legacy_integration.legacy_application" />
+        <service id="webfactory.legacy_integration.kernel_event_listener" class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\LegacyApplicationDispatchingEventListener">
+            <argument type="service" id="service_container" />
             <argument type="service" id="annotation_reader"/>
+            <argument type="service" id="debug.stopwatch" on-invalid="ignore" />
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
 
@@ -21,11 +24,24 @@
             <tag name="webfactory.integration.filter" />
         </service>
 
-        <service id="webfactory.legacy_integration.parser" class="%webfactory.legacy_integration.parser_class%" />
-
         <service class="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">
-            <argument type="service" id="webfactory.legacy_integration.legacy_application" />
+            <argument type="service" id="service_container" />
             <tag name="twig.extension" />
         </service>
+
+        <service id="webfactory.legacy_integration.xpath_helper_factory"
+                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelperFactory">
+            <argument type="service">
+                <service class="%webfactory.legacy_integration.parser_class%" />
+            </argument>
+            <argument type="service" id="webfactory.legacy_integration.legacy_application" />
+        </service>
+
+        <service id="webfactory.legacy_integration.xpath_helper"
+                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper"
+                 factory-service="webfactory.legacy_integration.xpath_helper_factory"
+                 factory-method="createHelper">
+        </service>
+
     </services>
 </container>
