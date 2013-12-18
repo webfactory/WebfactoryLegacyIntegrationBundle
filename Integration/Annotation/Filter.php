@@ -6,22 +6,23 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 use Symfony\Component\DependencyInjection\Container;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
 
 /**
  * @Annotation
  */
-class Filter implements Factory {
+class Filter implements Factory
+{
 
     protected $class;
     protected $service;
 
-    public function __construct($values) {
+    public function __construct($values)
+    {
         if (isset($values['class'])) {
             $this->class = $values['class'];
         }
@@ -32,7 +33,8 @@ class Filter implements Factory {
             throw new \Exception('Parameter "class" or "service" is missing in Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter.');
     }
 
-    public function createFilter(Container $container) {
+    public function createFilter(Container $container)
+    {
         if ($class = $this->class) {
             if (!class_exists($class))
                 throw new \Exception('Unknown class ' . $class . ' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
@@ -43,9 +45,8 @@ class Filter implements Factory {
                 throw new \Exception('Unknown service ' . $service . ' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
             $filter = $container->get($service);
         }
-        if (! $filter instanceof FilterInterface)
+        if (!$filter instanceof FilterInterface)
             throw new \Exception("Class " . get_class($filter) . ' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation is not a Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter.');
         return $filter;
     }
-
 }

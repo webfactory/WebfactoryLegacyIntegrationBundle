@@ -6,7 +6,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -16,10 +15,11 @@ use Symfony\Component\HttpFoundation\Response;
  * (und führt den Symfony-Controller nicht aus), wenn die Altanwendung
  * einen Redirect generiert hat.
  */
-class IgnoreRedirect extends PassthruLegacyResponseFilter {
+class IgnoreRedirect extends PassthruLegacyResponseFilter
+{
 
-    protected function check(Response $response) {
+    protected function check(Response $response)
+    {
         return $response->isRedirect();
     }
-
 }

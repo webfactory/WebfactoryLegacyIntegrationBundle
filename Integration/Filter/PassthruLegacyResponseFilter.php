@@ -6,12 +6,11 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 
 /**
  * Ein LegacyIntergration-Filter, der die Response der Altanwendung
@@ -20,19 +19,21 @@ use Symfony\Component\HttpFoundation\Response;
  * Subklassen können die check() Methode überschreiben um die
  * legacy-Response nur unter bestimmten Bedingungen zurückzugeben.
  */
-class PassthruLegacyResponseFilter implements FilterInterface {
+class PassthruLegacyResponseFilter implements FilterInterface
+{
 
-    public function filter(FilterControllerEvent $event, Response $response) {
+    public function filter(FilterControllerEvent $event, Response $response)
+    {
         if ($this->check($response)) {
-            $event->setController(function() use ($response) {
+            $event->setController(function () use ($response) {
                 return $response;
             });
             $event->stopPropagation();
         }
     }
 
-    protected function check(Response $response) {
+    protected function check(Response $response)
+    {
         return true;
     }
-
 }

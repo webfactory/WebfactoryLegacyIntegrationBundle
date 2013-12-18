@@ -6,13 +6,12 @@
  * file that was distributed with this source code.
  */
 
-
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Webfactory\Dom\BaseParsingHelper;
 
-class XPathHelperFactory {
+class XPathHelperFactory
+{
 
     /** @var BaseParsingHelper */
     protected $parser;
@@ -20,13 +19,14 @@ class XPathHelperFactory {
     /** @var LegacyApplication */
     protected $legacyApplication;
 
-    public function __construct(BaseParsingHelper $parser, LegacyApplication $legacy) {
+    public function __construct(BaseParsingHelper $parser, LegacyApplication $legacy)
+    {
         $this->parser = $parser;
         $this->legacyApplication = $legacy;
     }
 
-    public function createHelper() {
+    public function createHelper()
+    {
         return new XPathHelper($this->parser, $this->legacyApplication->getResponse()->getContent());
     }
-
 }

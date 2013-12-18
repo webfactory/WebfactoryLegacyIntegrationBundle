@@ -6,21 +6,22 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
 use Symfony\Component\HttpFoundation\Response;
 
-class IgnoreHeader extends PassthruLegacyResponseFilter {
+class IgnoreHeader extends PassthruLegacyResponseFilter
+{
 
     protected $header;
 
-    public function __construct($header) {
+    public function __construct($header)
+    {
         $this->header = $header;
     }
 
-    protected function check(Response $response) {
+    protected function check(Response $response)
+    {
         return $response->headers->has($this->header);
     }
-
 }

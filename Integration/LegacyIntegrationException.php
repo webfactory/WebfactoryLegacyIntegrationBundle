@@ -6,8 +6,8 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
-
-class LegacyIntegrationException extends \RuntimeException {}
+class LegacyIntegrationException extends \RuntimeException
+{
+}

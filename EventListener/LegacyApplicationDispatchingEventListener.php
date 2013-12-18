@@ -6,33 +6,36 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 
+use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Doctrine\Common\Annotations\Reader;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
-class LegacyApplicationDispatchingEventListener {
+class LegacyApplicationDispatchingEventListener
+{
 
     protected $container;
     protected $reader;
     protected $stopwatch;
     protected $filters = array();
 
-    public function __construct(ContainerInterface $container, Reader $reader) {
+    public function __construct(ContainerInterface $container, Reader $reader)
+    {
         $this->container = $container;
         $this->reader = $reader;
     }
 
-    public function addFilter(Filter $filter) {
+    public function addFilter(Filter $filter)
+    {
         $this->filters[] = $filter;
     }
 
-    public function onKernelController(FilterControllerEvent $event) {
+    public function onKernelController(FilterControllerEvent $event)
+    {
         if ($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
             return;
         }
@@ -65,9 +68,9 @@ class LegacyApplicationDispatchingEventListener {
         }
     }
 
-    protected function getLegacyApplication() {
+    protected function getLegacyApplication()
+    {
         return $this->container->get('webfactory_legacy_integration.legacy_application');
     }
-
 }
 

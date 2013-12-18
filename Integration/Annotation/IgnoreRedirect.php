@@ -6,7 +6,6 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
 use Symfony\Component\DependencyInjection\Container;
@@ -16,10 +15,11 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\IgnoreRedirect 
 /**
  * @Annotation
  */
-class IgnoreRedirect implements Factory {
+class IgnoreRedirect implements Factory
+{
 
-    public function createFilter(Container $container) {
+    public function createFilter(Container $container)
+    {
         return new IgnoreRedirectFilter();
     }
-
 }

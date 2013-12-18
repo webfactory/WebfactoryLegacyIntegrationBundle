@@ -6,11 +6,11 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
 /**
  * @Annotation
  */
-class Dispatch {
+class Dispatch
+{
 }

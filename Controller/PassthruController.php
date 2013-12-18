@@ -6,21 +6,19 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Passthru;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation as Legacy;
 
-class PassthruController extends Controller {
+class PassthruController extends Controller
+{
 
     /**
-     * @Dispatch
-     * @Passthru
+     * @Legacy\Dispatch
+     * @Legacy\Passthru
      */
-    public function indexAction() {
-
+    public function indexAction()
+    {
     }
-
 }

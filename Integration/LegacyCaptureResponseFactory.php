@@ -6,17 +6,17 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\RedirectResponse;
+
 use Symfony\Component\HttpFoundation\Response;
 
-use Symfony\Component\HttpKernel\HttpKernelInterface;
+class LegacyCaptureResponseFactory
+{
 
-class LegacyCaptureResponseFactory {
-
-    public static function create($legacyExecutionCallback) {
+    public static function create($legacyExecutionCallback)
+    {
         ob_start();
         $statusCode = call_user_func($legacyExecutionCallback) ? : 200;
 
@@ -46,5 +46,4 @@ class LegacyCaptureResponseFactory {
 
         return new Response($content, $statusCode, $responseHeaders);
     }
-
 }

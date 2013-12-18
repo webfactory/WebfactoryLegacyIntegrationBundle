@@ -6,27 +6,28 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpFoundation\Response;
 use Doctrine\Common\Annotations\Reader;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
 use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 
-class ControllerAnnotations implements FilterInterface {
+class ControllerAnnotations implements FilterInterface
+{
 
     protected $reader;
     protected $container;
 
-    public function __construct(Reader $reader, Container $container) {
+    public function __construct(Reader $reader, Container $container)
+    {
         $this->reader = $reader;
         $this->container = $container;
     }
 
-    public function filter(FilterControllerEvent $event, Response $response) {
+    public function filter(FilterControllerEvent $event, Response $response)
+    {
         if (!is_array($controller = $event->getController())) {
             return;
         }
@@ -42,5 +43,4 @@ class ControllerAnnotations implements FilterInterface {
             }
         }
     }
-
 }

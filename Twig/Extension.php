@@ -6,41 +6,46 @@
  * file that was distributed with this source code.
  */
 
-
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication;
 
-class Extension extends \Twig_Extension {
+class Extension extends \Twig_Extension
+{
 
     protected $legacyApplication;
     protected $container;
 
-    public function __construct(ContainerInterface $container) {
+    public function __construct(ContainerInterface $container)
+    {
         $this->container = $container;
     }
 
-    public function getGlobals() {
+    public function getGlobals()
+    {
         return array(
             'legacyApplication' => $this
         );
     }
 
-    public function getName() {
+    public function getName()
+    {
         return 'webfactory_legacy_integration';
     }
 
     /** @deprecated */
-    public function getFragmentalResponse() {
+    public function getFragmentalResponse()
+    {
         return $this->getXPathHelper();
     }
 
-    public function xpath($xpath) {
+    public function xpath($xpath)
+    {
         return $this->getXPathHelper()->getFragment($xpath);
     }
 
-    protected function getXPathHelper() {
+    protected function getXPathHelper()
+    {
         return $this->container->get('webfactory_legacy_integration.xpath_helper');
     }
 }
