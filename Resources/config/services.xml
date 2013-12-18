@@ -21,7 +21,7 @@
         <service class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\ControllerAnnotations">
             <argument type="service" id="annotation_reader"/>
             <argument type="service" id="service_container" />
-            <tag name="webfactory.integration.filter" />
+            <tag name="webfactory_legacy_integration.filter" />
         </service>
 
         <service class="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">

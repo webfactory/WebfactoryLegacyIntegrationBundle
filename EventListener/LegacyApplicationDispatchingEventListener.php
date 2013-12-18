@@ -23,7 +23,7 @@ class LegacyApplicationDispatchingEventListener {
         $this->stopwatch = $stopwatch;
     }
 
-    public function addIntegrationFilter(Filter $filter) {
+    public function addFilter(Filter $filter) {
         $this->filters[] = $filter;
     }
 
