@@ -14,7 +14,6 @@
         <service id="webfactory_legacy_integration.kernel_event_listener" class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\LegacyApplicationDispatchingEventListener">
             <argument type="service" id="service_container" />
             <argument type="service" id="annotation_reader"/>
-            <argument type="service" id="debug.stopwatch" on-invalid="ignore" />
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
         </service>
 

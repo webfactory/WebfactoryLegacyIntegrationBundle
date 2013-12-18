@@ -3,7 +3,6 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\Debug\Stopwatch;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Doctrine\Common\Annotations\Reader;
@@ -17,10 +16,9 @@ class LegacyApplicationDispatchingEventListener {
     protected $stopwatch;
     protected $filters = array();
 
-    public function __construct(ContainerInterface $container, Reader $reader, Stopwatch $stopwatch = null) {
+    public function __construct(ContainerInterface $container, Reader $reader) {
         $this->container = $container;
         $this->reader = $reader;
-        $this->stopwatch = $stopwatch;
     }
 
     public function addFilter(Filter $filter) {
@@ -36,10 +34,6 @@ class LegacyApplicationDispatchingEventListener {
             return;
         }
 
-        if ($this->stopwatch) {
-            $e = $this->stopwatch->start('Parsing');
-        }
-
         $object = new \ReflectionObject($controller[0]);
         $method = $object->getMethod($controller[1]);
 
@@ -51,32 +45,15 @@ class LegacyApplicationDispatchingEventListener {
             }
         }
 
-        if ($this->stopwatch) {
-            $e->stop();
-        }
-
         if ($dispatch) {
 
-            if ($this->stopwatch) {
-                $e = $this->stopwatch->start('Dispatching');
-            }
-
             $response = $this->getLegacyApplication()->handle($event->getRequest(), $event->getRequestType(), false);
-
-            if ($this->stopwatch) {
-                $e->stop();
-                $e = $this->stopwatch->start('Filters');
-            }
 
             foreach ($this->filters as $filter) {
                 $filter->filter($event, $response);
                 if ($event->isPropagationStopped()) {
                     break;
                 }
-            }
-
-            if ($this->stopwatch) {
-                $e->stop();
             }
         }
     }
