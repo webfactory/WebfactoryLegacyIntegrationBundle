@@ -1,6 +1,16 @@
 {
-
     "name": "webfactory/legacy-integration-bundle",
+
+    "description": "A battle-proven approach to facilitate the incremental migration of legacy applications to the Symfony2 stack.",
+
+    "license": "MIT",
+
+    "authors": [{
+        "name": "webfactory GmbH",
+        "email": "info@webfactory.de",
+        "homepage": "http://www.webfactory.de",
+        "role": "Developer"
+    }],
 
     "autoload": {
         "psr-0": { "Webfactory\\Bundle\\LegacyIntegrationBundle": "" }
