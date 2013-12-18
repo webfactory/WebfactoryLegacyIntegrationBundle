@@ -1,0 +1,11 @@
+syntax:regexp
+^bin/
+^conf/
+^lib/
+^logs/
+^sessions/
+^tmp/
+^www/symfony-webapp.php
+^vendor/
+^composer.lock
+^phpunit.xml$
