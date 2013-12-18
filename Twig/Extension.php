@@ -21,7 +21,7 @@ class Extension extends \Twig_Extension {
     }
 
     public function getName() {
-        return 'webfactory.legacy_integration.twig_extension';
+        return 'webfactory_legacy_integration';
     }
 
     /** @deprecated */
@@ -34,6 +34,6 @@ class Extension extends \Twig_Extension {
     }
 
     protected function getXPathHelper() {
-        return $this->container->get('webfactory.legacy_integration.xpath_helper');
+        return $this->container->get('webfactory_legacy_integration.xpath_helper');
     }
 }

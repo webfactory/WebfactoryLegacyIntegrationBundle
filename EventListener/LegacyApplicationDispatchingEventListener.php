@@ -82,7 +82,7 @@ class LegacyApplicationDispatchingEventListener {
     }
 
     protected function getLegacyApplication() {
-        return $this->container->get('webfactory.legacy_integration.legacy_application');
+        return $this->container->get('webfactory_legacy_integration.legacy_application');
     }
 
 }

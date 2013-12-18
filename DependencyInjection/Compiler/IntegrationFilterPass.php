@@ -9,7 +9,7 @@ use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 class IntegrationFilterPass implements CompilerPassInterface {
 
     public function process(ContainerBuilder $container) {
-        $kernelEventListenerDefinition = $container->getDefinition('webfactory.legacy_integration.kernel_event_listener');
+        $kernelEventListenerDefinition = $container->getDefinition('webfactory_legacy_integration.kernel_event_listener');
 
         foreach ($container->findTaggedServiceIds('webfactory.integration.filter') as $id => $tags) {
             $kernelEventListenerDefinition->addMethodCall('addIntegrationFilter', array(

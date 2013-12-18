@@ -6,12 +6,12 @@
     <services>
 
         <service
-                id="webfactory.legacy_integration.legacy_application"
+                id="webfactory_legacy_integration.legacy_application"
                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication"
                 public="true">
         </service>
 
-        <service id="webfactory.legacy_integration.kernel_event_listener" class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\LegacyApplicationDispatchingEventListener">
+        <service id="webfactory_legacy_integration.kernel_event_listener" class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\LegacyApplicationDispatchingEventListener">
             <argument type="service" id="service_container" />
             <argument type="service" id="annotation_reader"/>
             <argument type="service" id="debug.stopwatch" on-invalid="ignore" />
@@ -29,17 +29,17 @@
             <tag name="twig.extension" />
         </service>
 
-        <service id="webfactory.legacy_integration.xpath_helper_factory"
+        <service id="webfactory_legacy_integration.xpath_helper_factory"
                  class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelperFactory">
             <argument type="service">
-                <service class="%webfactory.legacy_integration.parser_class%" />
+                <service class="%webfactory_legacy_integration.parser_class%" />
             </argument>
-            <argument type="service" id="webfactory.legacy_integration.legacy_application" />
+            <argument type="service" id="webfactory_legacy_integration.legacy_application" />
         </service>
 
-        <service id="webfactory.legacy_integration.xpath_helper"
+        <service id="webfactory_legacy_integration.xpath_helper"
                  class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper"
-                 factory-service="webfactory.legacy_integration.xpath_helper_factory"
+                 factory-service="webfactory_legacy_integration.xpath_helper_factory"
                  factory-method="createHelper">
         </service>
 
