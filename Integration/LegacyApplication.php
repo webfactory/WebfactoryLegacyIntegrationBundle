@@ -4,9 +4,7 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Debug\Stopwatch;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
-use Webfactory\Dom\BaseParsingHelper;
 
 class LegacyApplication implements HttpKernelInterface {
 
