@@ -1,4 +1,4 @@
-webfactory/legacyintegration-bundle
+webfactory/legacy-integration-bundle
 ===================================
 
 This bundle provides an approach to integrate existing legacy applications with
