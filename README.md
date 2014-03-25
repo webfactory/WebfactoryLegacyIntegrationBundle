@@ -132,7 +132,7 @@ In particular,
 - @Legacy\IgnoreHeader("some-name") will bypass the controller if the legacy application sent "Some-Name:" header. This can be used to make the legacy application control execution of the Symfony2 controller (use with caution).
 
 
-Integrate Symfony 1.4
+Integrate a Symfony 1.4 project
 ---
 
 To integrate a Symfony 1.4 project into Symfony2 with this bundle, the following changes need to be done:
@@ -149,7 +149,7 @@ webfactory_legacy_integration:
     legacyApplicationBootstrapFile: ../legacy/web/index_legacy.php
 ```
 
-### Symfony 1.4 files
+### Symfony 1.4 project files
 
 - create a directory named legacy in the root of the Symfony2 project
 - copy all files from your Symfony 1.4 project into this new directory
@@ -160,6 +160,7 @@ webfactory_legacy_integration:
 
 - you have to clear your cache in your Symfony2 AND your Symfony 1.4 project after you make changes that require a clear cache
 - you have to create a new bundle and a new route with @Legacy\Dispatch and @Legacy\PassThru for each of your Symfony 1.4 route
+- your Symfony 1.4 project will no longer function properly if you move it out of the Symfony2 framework
 
 ### Swiftmailer conflict
 
