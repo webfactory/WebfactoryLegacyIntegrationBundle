@@ -130,7 +130,7 @@ In particular,
 - @Legacy\Passthru will send the legacy application's response as-is, so the controller itself will never be run
 - @Legacy\IgnoreRedirect will bypass the controller if the legacy application sent a Location: redirect header.
 - @Legacy\IgnoreHeader("some-name") will bypass the controller if the legacy application sent "Some-Name:" header. This can be used to make the legacy application control execution of the Symfony2 controller (use with caution).
-- 
+
 
 Integrate Symfony 1.4
 ---
