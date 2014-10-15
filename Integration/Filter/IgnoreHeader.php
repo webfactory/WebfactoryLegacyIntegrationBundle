@@ -15,6 +15,9 @@ class IgnoreHeader extends PassthruLegacyResponseFilter
 
     protected $header;
 
+    /**
+     * @param string $header
+     */
     public function __construct($header)
     {
         $this->header = $header;
