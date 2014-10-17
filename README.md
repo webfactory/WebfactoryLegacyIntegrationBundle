@@ -131,6 +131,7 @@ In particular,
 - @Legacy\IgnoreRedirect will bypass the controller if the legacy application sent a Location: redirect header.
 - @Legacy\IgnoreHeader("some-name") will bypass the controller if the legacy application sent "Some-Name:" header. This can be used to make the legacy application control execution of the Symfony2 controller (use with caution).
 
+
 Bugs
 ---
 
