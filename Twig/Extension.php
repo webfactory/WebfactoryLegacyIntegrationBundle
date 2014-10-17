@@ -47,9 +47,6 @@ class Extension extends \Twig_Extension
      */
     public function xpath($xpath)
     {
-        if ($this->legacyApplication === null) {
-            return '';
-        }
         return $this->getXPathHelper()->getFragment($xpath);
     }
 
