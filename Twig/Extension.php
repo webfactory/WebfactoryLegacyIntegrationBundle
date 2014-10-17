@@ -39,8 +39,17 @@ class Extension extends \Twig_Extension
         return $this->getXPathHelper();
     }
 
+    /**
+     * Evaluate $xpath search query on the legacy content and get a string representation of matching elements.
+     *
+     * @param string $xpath
+     * @return string
+     */
     public function xpath($xpath)
     {
+        if ($this->legacyApplication === null) {
+            return '';
+        }
         return $this->getXPathHelper()->getFragment($xpath);
     }
 
