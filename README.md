@@ -83,6 +83,14 @@ class MyController ...
 }
 ```
 
+There are two ways of mixing your legacy world with your new world: either you create a new layout and embed parts of
+the legacy application, or you retain your old layout and embed new parts in it.
+
+### Embedding legacy parts in your new layout
+
+This is the way we recommend in general. If you're doing your legacy integration for a frontend redesign or if it's not
+too hard to rewrite your layout in the Symfony world, you should do that.
+
 Once the legacy application has been run, you can use the Twig global `legacyApplication`
 provided by the bundle to access parts of the response and place it in your views.
 
@@ -99,6 +107,36 @@ provided by the bundle to access parts of the response and place it in your view
     </body>
 </html>
 ```
+
+### Embedding new parts in legacy layout
+
+Sometimes it's too expensive to rewrite the layout, at least in the beginning. In this case, you can retain your legacy
+layout and embed new parts written in Symfony into it. But be aware that this way could be more problematic: in each of
+your new parts, you have a dependency on the old system. This might not only be a problem in terms of performance, but
+could also cement the existence your legacy layout.
+
+Do yourself a favor: write down "rewrite layout" in your backlog and isolate your dependencies on the legacy layout
+e.g. like this:
+
+```twig
+{# legacy-layout-for-embedding-new-parts.html.twig #}
+{{ webfactory_legacy_integration_embed('<!-- SYMFONY2_CONTENT -->', block('symfony2_content')) }}
+{{ webfactory_legacy_integration_embed_result() }}
+```
+
+And extend this layout like this:
+
+```twig
+{# your-new-part.html.twig #}
+{% extends 'legacy-layout-for-embedding-new-parts.html.twig' %}
+{% block symfony2_content %}
+    your new content here
+{% end block %}
+```
+
+That way, you can transparently transform your legacy-layout-for-embedding-new-parts.html.twig to your new layout later
+on.
+
 
 Filters
 ---
