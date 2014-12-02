@@ -16,9 +16,19 @@ class Extension extends \Twig_Extension
     protected $legacyApplication;
     protected $container;
 
+    protected $embedResult = null;
+
     public function __construct(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+
+    public function getFunctions()
+    {
+        return array(
+            new \Twig_SimpleFunction('webfactory_legacy_integration_embed', array($this, 'embedString')),
+            new \Twig_SimpleFunction('webfactory_legacy_integration_embed_result', array($this, 'getEmbedResult'), array('is_safe' => array('html')))
+        );
     }
 
     public function getGlobals()
@@ -53,5 +63,20 @@ class Extension extends \Twig_Extension
     protected function getXPathHelper()
     {
         return $this->container->get('webfactory_legacy_integration.xpath_helper');
+    }
+
+    public function embedString($needle, $content)
+    {
+        if ($this->embedResult === null) {
+            $legacyApp = $this->container->get('webfactory_legacy_integration.legacy_application');
+            $this->embedResult = $legacyApp->getResponse()->getContent();
+        }
+
+        $this->embedResult = str_replace($needle, $content, $this->embedResult);
+    }
+
+    public function getEmbedResult()
+    {
+        return $this->embedResult;
     }
 }
