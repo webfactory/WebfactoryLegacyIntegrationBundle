@@ -13,10 +13,8 @@
     }],
 
     "autoload": {
-        "psr-0": { "Webfactory\\Bundle\\LegacyIntegrationBundle": "" }
+        "psr-4": { "Webfactory\\Bundle\\LegacyIntegrationBundle\\": "" }
     },
-
-    "target-dir": "Webfactory/Bundle/LegacyIntegrationBundle",
 
     "require": {
         "symfony/framework-bundle": "~2.2",
