@@ -26,7 +26,7 @@ will naturally "grow" away from the legacy application towards the Symfony2 stac
   returns well-formed XHTML or Polyglot HTML5.
 
 To learn more about this concept, its benefits and caveats, use your time-machine
-and visit the Symfony2 User Group Colone meeting on 2013-12-18.
+and visit the [Symfony2 User Group Colone meeting on 2013-12-18](http://de.slideshare.net/webfactory/marry-me-public).
 
 Installation
 ---
