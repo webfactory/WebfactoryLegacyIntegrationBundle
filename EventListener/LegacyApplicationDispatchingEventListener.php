@@ -54,13 +54,17 @@ class LegacyApplicationDispatchingEventListener
         foreach ($this->reader->getMethodAnnotations($method) as $configuration) {
             if ($configuration instanceof Dispatch) {
                 $dispatch = true;
-                $dispatchConfig = $configuration->getPath();
-                $dispatchPath = null;
-                if($dispatchConfig) {
-                    $dispatchPath = array_key_exists('path' , $dispatchConfig) ? $dispatchConfig['path'] : null;
+                $dispatchConfig = $configuration->getServer();
+                if(empty($dispatchConfig)) {
+                    break;
                 }
+                $dispatchServer = array_key_exists('server' , $dispatchConfig) ? $dispatchConfig['server'] : null;
                 $request = $request->duplicate();
-                $request->server->set('REQUEST_URI', $dispatchPath);
+                $server = $_SERVER;
+                foreach($dispatchServer as $k=>$v) {
+                    $server[$k] = $v;
+                }
+                $request->server->replace($server);
                 break;
             }
         }
