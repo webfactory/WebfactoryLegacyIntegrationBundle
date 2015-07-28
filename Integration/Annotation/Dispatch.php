@@ -13,4 +13,17 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
  */
 class Dispatch
 {
+    private $server = null;
+
+    public function __construct($server = null)
+    {
+        if($server !== null) {
+            $this->server = $server;
+        }
+    }
+
+    public function getServer()
+    {
+        return $this->server;
+    }
 }

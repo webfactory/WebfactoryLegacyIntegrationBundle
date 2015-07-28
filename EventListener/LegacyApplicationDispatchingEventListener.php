@@ -10,6 +10,7 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
@@ -46,18 +47,31 @@ class LegacyApplicationDispatchingEventListener
 
         $object = new \ReflectionObject($controller[0]);
         $method = $object->getMethod($controller[1]);
+        $origRequest = $event->getRequest();
+        $request = $origRequest->duplicate();
 
         $dispatch = false;
         foreach ($this->reader->getMethodAnnotations($method) as $configuration) {
             if ($configuration instanceof Dispatch) {
                 $dispatch = true;
+                $dispatchConfig = $configuration->getServer();
+                if(empty($dispatchConfig)) {
+                    break;
+                }
+                $dispatchServer = array_key_exists('server' , $dispatchConfig) ? $dispatchConfig['server'] : null;
+                $request = $request->duplicate();
+                $server = $_SERVER;
+                foreach($dispatchServer as $k=>$v) {
+                    $server[$k] = $v;
+                }
+                $request->server->replace($server);
                 break;
             }
         }
 
         if ($dispatch) {
 
-            $response = $this->getLegacyApplication()->handle($event->getRequest(), $event->getRequestType(), false);
+            $response = $this->getLegacyApplication()->handle($request, $event->getRequestType(), false);
 
             foreach ($this->filters as $filter) {
                 $filter->filter($event, $response);
