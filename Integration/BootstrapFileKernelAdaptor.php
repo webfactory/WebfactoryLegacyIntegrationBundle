@@ -25,7 +25,11 @@ class BootstrapFileKernelAdaptor implements HttpKernelInterface
     {
         $file = $this->file;
         return LegacyCaptureResponseFactory::create(function () use ($file, $request) {
-            return include($file);
+            $_SERVER_BAK = $_SERVER;
+            $_SERVER = $request->server->all();
+            $include = include($file);
+            $_SERVER = $_SERVER_BAK;
+            return $include;
         });
     }
 }

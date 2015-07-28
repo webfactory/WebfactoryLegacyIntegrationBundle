@@ -13,4 +13,17 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
  */
 class Dispatch
 {
+    private $path = null;
+
+    public function __construct($path = null)
+    {
+        if($path !== null) {
+            $this->path = $path;
+        }
+    }
+
+    public function getPath()
+    {
+        return $this->path;
+    }
 }
