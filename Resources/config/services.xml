@@ -24,6 +24,12 @@
             <tag name="webfactory_legacy_integration.filter"/>
         </service>
 
+        <service class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\KeepCookiesAndHeadersFilter">
+            <argument type="service" id="annotation_reader"/>
+            <tag name="webfactory_legacy_integration.filter"/>
+            <tag name="kernel.event_listener" event="kernel.response"/>
+        </service>
+
         <service class="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">
             <argument type="service" id="service_container"/>
             <tag name="twig.extension"/>
