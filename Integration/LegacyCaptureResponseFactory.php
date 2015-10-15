@@ -18,7 +18,12 @@ class LegacyCaptureResponseFactory
     public static function create($legacyExecutionCallback)
     {
         ob_start();
+
         $statusCode = call_user_func($legacyExecutionCallback) ? : 200;
+
+        if (function_exists('http_response_code')) {
+            $statusCode = http_response_code();
+        }
 
         if (headers_sent()) {
             throw new LegacyIntegrationException("It must be possible to caputure the legacy application's output with ob_start(). Headers and/or output must not have been sent to the client.");
