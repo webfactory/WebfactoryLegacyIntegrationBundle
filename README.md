@@ -51,8 +51,9 @@ You must provide a single file that can be `include()`ed in order to run your
 legacy applcation. Typically you will already have this - it should be your
 legacy application's front controller.
 
-This file should _return_ the HTTP status code sent by the legacy application.
-This is because the `http_response_code()` function is not available until PHP 5.4.
+If you are running PHP < 5.4, this file should _return_ the HTTP status code
+sent by the legacy application. Starting with PHP 5.4, `http_response_code()`
+will be used to detect it.
 
 Also, as this bundle will try to capture the response including headers using
 output buffering, you must not flush the response body or headers
@@ -83,8 +84,17 @@ class MyController ...
 }
 ```
 
-There are two ways of mixing your legacy world with your new world: Either you create a new layout and embed parts of
-the legacy application, or you retain your old layout and embed new parts in it.
+This will run your legacy application before entering the controller. The entire output including
+HTTP headers (repeat after me: including HTTP headers) will be captured and saved. *Nothing* will
+be sent to the client unless you take care of doing so. 
+
+Regarding the legacy response body, there are two ways of mixing your legacy world with your new world: Either you create a new layout and embed parts of
+the legacy application, or you retain your old layout and embed new parts in it. The following sections 
+explain both of them.
+
+Regarding HTTP headers and especially cookies sent by the legacy application make sure
+you don't miss the filters explained further below. For example, if your legacy code uses `session_start()`
+you probably need to forward the session cookie.
 
 ### Using XPath to embed parts of the legacy response in your new layout
 
@@ -183,7 +193,8 @@ In particular,
 - @Legacy\Passthru will send the legacy application's response as-is, so the controller itself will never be run
 - @Legacy\IgnoreRedirect will bypass the controller if the legacy application sent a Location: redirect header.
 - @Legacy\IgnoreHeader("some-name") will bypass the controller if the legacy application sent "Some-Name:" header. This can be used to make the legacy application control execution of the Symfony2 controller (use with caution).
-
+- @Legacy\KeepHeaders will apply *all* HTTP headers found in the legacy response and add them to the response created by Symfony controller. You can also selectively pick headers via `@Legacy\KeepHeaders({"X-Some-Header", "X-Some-Other"})` 
+- @Legacy\KeepCookies works like `KeepHeaders` but peeks at cookie names.   
 
 Bugs
 ---
