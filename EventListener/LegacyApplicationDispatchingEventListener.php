@@ -11,7 +11,6 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
@@ -36,10 +35,6 @@ class LegacyApplicationDispatchingEventListener
 
     public function onKernelController(FilterControllerEvent $event)
     {
-        if ($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
-            return;
-        }
-
         if (!is_array($controller = $event->getController())) {
             return;
         }
