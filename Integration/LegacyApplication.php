@@ -28,7 +28,11 @@ class LegacyApplication implements HttpKernelInterface
 
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
-        return $this->response = $this->legacyKernel->handle($request, $type, $catch);
+        if ($this->response !== null) {
+            // Dispatch legacy application only once.
+            $this->response = $this->legacyKernel->handle($request, $type, $catch);
+        }
+        return $this->response;
     }
 
     public function isDispatched()
