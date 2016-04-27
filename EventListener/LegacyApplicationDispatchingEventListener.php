@@ -20,6 +20,10 @@ class LegacyApplicationDispatchingEventListener
     protected $container;
     protected $reader;
     protected $stopwatch;
+
+    /**
+     * @var Filter[]
+     */
     protected $filters = array();
 
     public function __construct(ContainerInterface $container, Reader $reader)
