@@ -3,8 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/legacy-integration-bundle.iml" filepath="$PROJECT_DIR$/.idea/legacy-integration-bundle.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/legacy-integration-bundle.iml" filepath="$PROJECT_DIR$/.idea/legacy-integration-bundle.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/legacyintegration-bundle.iml" filepath="$PROJECT_DIR$/.idea/legacyintegration-bundle.iml" />
     </modules>
   </component>
 </project>
-
