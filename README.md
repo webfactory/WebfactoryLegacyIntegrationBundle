@@ -12,7 +12,7 @@ Later, after the Symfony2 Controller has been executed and a Twig template is be
 rendered, fragments of the "legacy response" can be retrieved and be used as part
 of the output.
 
-That way, you can start with your legacy applcation and Symfony2 in coexistence
+That way, you can start with your legacy application and Symfony2 in coexistence
 next to each other. You can then incrementally start to shift functionality over
 to the Symfony2 stack while maintaining a coherent user experience.
 
@@ -48,7 +48,7 @@ The legacy "bootstrap" file
 ---
 
 You must provide a single file that can be `include()`ed in order to run your
-legacy applcation. Typically you will already have this - it should be your
+legacy application. Typically you will already have this - it should be your
 legacy application's front controller.
 
 If you are running PHP < 5.4, this file should _return_ the HTTP status code

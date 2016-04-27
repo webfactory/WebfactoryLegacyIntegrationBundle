@@ -21,6 +21,10 @@ class LegacyApplicationDispatchingEventListener
     protected $container;
     protected $reader;
     protected $stopwatch;
+
+    /**
+     * @var Filter[]
+     */
     protected $filters = array();
 
     public function __construct(ContainerInterface $container, Reader $reader)
@@ -36,10 +40,6 @@ class LegacyApplicationDispatchingEventListener
 
     public function onKernelController(FilterControllerEvent $event)
     {
-        if ($event->getRequestType() != HttpKernelInterface::MASTER_REQUEST) {
-            return;
-        }
-
         if (!is_array($controller = $event->getController())) {
             return;
         }
@@ -68,6 +68,9 @@ class LegacyApplicationDispatchingEventListener
         }
     }
 
+    /**
+     * @return HttpKernelInterface
+     */
     protected function getLegacyApplication()
     {
         return $this->container->get('webfactory_legacy_integration.legacy_application');
