@@ -48,7 +48,7 @@ The legacy "bootstrap" file
 ---
 
 You must provide a single file that can be `include()`ed in order to run your
-legacy applcation. Typically you will already have this - it should be your
+legacy application. Typically you will already have this - it should be your
 legacy application's front controller.
 
 If you are running PHP < 5.4, this file should _return_ the HTTP status code
