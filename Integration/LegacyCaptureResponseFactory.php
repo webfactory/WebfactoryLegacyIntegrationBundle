@@ -48,7 +48,7 @@ class LegacyCaptureResponseFactory
         $cookies = array();
 
         foreach ($headers as $header) {
-            $header = preg_match('(^([^:]+):(.*)$)', $header, $matches);
+            preg_match('(^([^:]+):(.*)$)', $header, $matches);
             $headerName = strtolower(trim($matches[1]));
             $headerValue = trim($matches[2]);
 
