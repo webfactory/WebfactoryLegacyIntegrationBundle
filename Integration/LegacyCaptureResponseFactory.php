@@ -48,7 +48,7 @@ class LegacyCaptureResponseFactory
         $cookies = array();
 
         foreach ($headers as $header) {
-            $header = preg_match('(^([^:]+):(.*)$)', $header, $matches);
+            preg_match('(^([^:]+):(.*)$)', $header, $matches);
             $headerName = strtolower(trim($matches[1]));
             $headerValue = trim($matches[2]);
 
@@ -85,13 +85,14 @@ class LegacyCaptureResponseFactory
 
         $values = array(
             'name'           => trim($name),
-            'value'          => trim($value),
+            // Cookie value must be decoded, otherwise it is encoded again when we forward it to the Symfony response.
+            // That would lead to problems, for example with session cookies whose id can contain a comma.
+            'value'          => trim(urldecode($value)),
             'expires'        => 0,
             'path'           => '/',
             'domain'         => '',
             'secure'         => false,
-            'httponly'       => false,
-            'passedRawValue' => true,
+            'httponly'       => false
         );
 
         if (null !== $url) {
