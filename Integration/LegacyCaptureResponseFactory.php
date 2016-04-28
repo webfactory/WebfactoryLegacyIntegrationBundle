@@ -85,7 +85,9 @@ class LegacyCaptureResponseFactory
 
         $values = array(
             'name'           => trim($name),
-            'value'          => trim($value),
+            // Cookie value must be decoded, otherwise it is encoded again when we forward it to the Symfony response.
+            // That would lead to problems, for example with session cookies whose id can contain a comma.
+            'value'          => trim(urldecode($value)),
             'expires'        => 0,
             'path'           => '/',
             'domain'         => '',
