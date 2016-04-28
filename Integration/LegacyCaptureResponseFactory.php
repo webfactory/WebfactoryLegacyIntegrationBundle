@@ -90,8 +90,7 @@ class LegacyCaptureResponseFactory
             'path'           => '/',
             'domain'         => '',
             'secure'         => false,
-            'httponly'       => false,
-            'passedRawValue' => true,
+            'httponly'       => false
         );
 
         if (null !== $url) {
