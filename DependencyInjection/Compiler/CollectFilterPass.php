@@ -24,5 +24,9 @@ class CollectFilterPass implements CompilerPassInterface
                 new Reference($id)
             ));
         }
+        
+        if ($container->findTaggedServiceIds('webfactory.integration.filter')) {
+            throw new \RuntimeException("The webfactory.integration.filter tag has been renamed to webfactory_legacy_integration.filter already back 1.0.23. Please update your DIC configuration, and sorry for the hassle.");
+        }
     }
 }
