@@ -44,9 +44,8 @@
         </service>
 
         <service id="webfactory_legacy_integration.xpath_helper"
-                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper"
-                 factory-service="webfactory_legacy_integration.xpath_helper_factory"
-                 factory-method="createHelper">
+                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper">
+            <factory service="webfactory_legacy_integration.xpath_helper_factory" method="createHelper" />
         </service>
 
     </services>
