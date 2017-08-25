@@ -10,7 +10,7 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-class Extension extends \Twig_Extension
+class Extension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
 {
 
     protected $legacyApplication;
