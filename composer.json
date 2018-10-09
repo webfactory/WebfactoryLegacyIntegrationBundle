@@ -17,15 +17,15 @@
     },
 
     "require": {
-        "symfony/framework-bundle": "~2.2",
-        "symfony/dependency-injection": "~2.6",
-        "symfony/config": "~2.2",
-        "symfony/http-kernel": "~2.2",
-        "symfony/http-foundation": "~2.2",
         "doctrine/annotations": "~1.0",
-        "webfactory/dom": "~1.0, >= 1.0.15",
-        "twig/twig": "^1.23"
-
+        "psr/log": "^1.0",
+        "symfony/config": "~2.2",
+        "symfony/dependency-injection": "~2.6",
+        "symfony/framework-bundle": "~2.2",
+        "symfony/http-foundation": "~2.2",
+        "symfony/http-kernel": "~2.2",
+        "twig/twig": "^1.23",
+        "webfactory/dom": "~1.0, >= 1.0.15"
     }
 
 }

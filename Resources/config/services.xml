@@ -41,6 +41,8 @@
                 <service class="%webfactory_legacy_integration.parser_class%"/>
             </argument>
             <argument type="service" id="webfactory_legacy_integration.legacy_application"/>
+            <argument type="service" id="logger" on-invalid="null" />
+            <tag name="monolog.logger" channel="webfactory_legacy_integration" />
         </service>
 
         <service id="webfactory_legacy_integration.xpath_helper"
