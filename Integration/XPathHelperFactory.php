@@ -43,7 +43,7 @@ class XPathHelperFactory
             if (function_exists('tidy_repair_string')) {
                 $this->logger->notice('Failed parsing the legacy response as XHTML, trying to clean up with Tidy.', ['exception' => $exception, 'legacy_response' => $exception->getXmlInput()]);
 
-                return new XPathHelper($this->parser, tidy_repair_string($content, ['output-xhtml' => true], 'utf8'));
+                return new XPathHelper($this->parser, tidy_repair_string($content, ['output-xhtml' => true, 'wrap' => 0], 'utf8'));
             } else {
                 $this->logger->warning('Failed to process legacy response as XHTML.', ['exception' => $exception, 'legacy_response' => $exception->getXmlInput()]);
 
