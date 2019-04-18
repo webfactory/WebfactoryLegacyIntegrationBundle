@@ -9,8 +9,11 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Twig;
 
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Twig\Extension\AbstractExtension;
+use Twig\Extension\GlobalsInterface;
+use Twig\TwigFunction;
 
-class Extension extends \Twig_Extension implements \Twig_Extension_GlobalsInterface
+class Extension extends AbstractExtension implements GlobalsInterface
 {
 
     protected $legacyApplication;
@@ -26,8 +29,8 @@ class Extension extends \Twig_Extension implements \Twig_Extension_GlobalsInterf
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('webfactory_legacy_integration_embed', array($this, 'embedString')),
-            new \Twig_SimpleFunction('webfactory_legacy_integration_embed_result', array($this, 'getEmbedResult'), array('is_safe' => array('html')))
+            new TwigFunction('webfactory_legacy_integration_embed', array($this, 'embedString')),
+            new TwigFunction('webfactory_legacy_integration_embed_result', array($this, 'getEmbedResult'), array('is_safe' => array('html')))
         );
     }
 
@@ -36,11 +39,6 @@ class Extension extends \Twig_Extension implements \Twig_Extension_GlobalsInterf
         return array(
             'legacyApplication' => $this
         );
-    }
-
-    public function getName()
-    {
-        return 'webfactory_legacy_integration';
     }
 
     /** @deprecated */
