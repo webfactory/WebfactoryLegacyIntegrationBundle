@@ -27,6 +27,22 @@ class LegacyCaptureResponseFactory
 
     public static function create($legacyExecutionCallback)
     {
+        // Preserve all headers that have previously been set (pre-Legacy startup)
+        $preLegacyHeaders = headers_list();
+        header_remove();
+
+        try {
+            return static::runLegacyAndCaptureResponse($legacyExecutionCallback);
+        } finally {
+            // Restore all headers that were previously present (before running legacy)
+            foreach ($preLegacyHeaders as $header) {
+                header($header);
+            }
+        }
+    }
+
+    private static function runLegacyAndCaptureResponse($legacyExecutionCallback)
+    {
         ob_start();
         try {
             $statusCode = call_user_func($legacyExecutionCallback);
