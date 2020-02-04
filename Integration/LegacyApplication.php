@@ -14,7 +14,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class LegacyApplication implements HttpKernelInterface
 {
-
     /** @var Response */
     protected $response;
 
@@ -28,10 +27,11 @@ class LegacyApplication implements HttpKernelInterface
 
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
-        if ($this->response === null) {
+        if (null === $this->response) {
             // Dispatch legacy application only once.
             $this->response = $this->legacyKernel->handle($request, $type, $catch);
         }
+
         return $this->response;
     }
 
@@ -44,7 +44,7 @@ class LegacyApplication implements HttpKernelInterface
     public function getResponse()
     {
         if (null === $this->response) {
-            throw new LegacyIntegrationException("The legacy application has not been started or has not generated a response. Maybe the @Dispatch annotation is missing for the current controller?");
+            throw new LegacyIntegrationException('The legacy application has not been started or has not generated a response. Maybe the @Dispatch annotation is missing for the current controller?');
         }
 
         return $this->response;

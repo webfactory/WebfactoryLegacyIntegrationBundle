@@ -13,7 +13,6 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation as Legacy;
 
 class PassthruController extends Controller
 {
-
     /**
      * @Legacy\Dispatch
      * @Legacy\Passthru

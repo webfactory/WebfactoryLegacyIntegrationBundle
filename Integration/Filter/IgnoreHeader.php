@@ -12,7 +12,6 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IgnoreHeader extends PassthruLegacyResponseFilter
 {
-
     protected $header;
 
     /**

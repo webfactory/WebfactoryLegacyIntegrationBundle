@@ -17,7 +17,6 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\IgnoreRedirect 
  */
 class IgnoreRedirect implements Factory
 {
-
     public function createFilter(Container $container)
     {
         return new IgnoreRedirectFilter();

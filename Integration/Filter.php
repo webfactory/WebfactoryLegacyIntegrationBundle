@@ -13,6 +13,5 @@ use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 interface Filter
 {
-
     public function filter(FilterControllerEvent $event, Response $response);
 }

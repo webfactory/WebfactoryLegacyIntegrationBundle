@@ -22,7 +22,7 @@ class Configuration implements ConfigurationInterface
                 ->scalarNode('parsingMode')
                     ->isRequired()
                     ->validate()
-                        ->ifNotInArray(array('html5', 'xhtml10'))
+                        ->ifNotInArray(['html5', 'xhtml10'])
                         ->thenInvalid('Invalid parsing mode (choose html5 or xhtm10)')
                 ->end();
 

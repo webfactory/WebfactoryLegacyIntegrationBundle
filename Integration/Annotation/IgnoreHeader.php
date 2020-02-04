@@ -17,13 +17,12 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\IgnoreHeader as
  */
 class IgnoreHeader implements Factory
 {
-
     protected $header;
 
     public function __construct(array $values)
     {
         $this->header = array_shift($values);
-        if (!is_string($this->header)) {
+        if (!\is_string($this->header)) {
             throw new \Exception("Please define a header with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\IgnoreHeader annotation.");
         }
     }

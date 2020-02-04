@@ -15,7 +15,8 @@ class KeepHeaders
 {
     public $value;
 
-    public function shouldKeep($name) {
-        return $this->value === null || in_array($name, $this->value);
+    public function shouldKeep($name)
+    {
+        return null === $this->value || \in_array($name, $this->value);
     }
 }

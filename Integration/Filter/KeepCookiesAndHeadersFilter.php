@@ -38,7 +38,7 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
 
     public function filter(FilterControllerEvent $event, Response $response)
     {
-        if (!is_array($controller = $event->getController())) {
+        if (!\is_array($controller = $event->getController())) {
             return;
         }
 
@@ -50,7 +50,7 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
         foreach ($this->reader->getMethodAnnotations($method) as $annotation) {
             if ($annotation instanceof KeepHeaders) {
                 $this->keepHeadersAnnotation = $annotation;
-            } else if ($annotation instanceof KeepCookies) {
+            } elseif ($annotation instanceof KeepCookies) {
                 $this->keepCookiesAnnotation = $annotation;
             }
         }

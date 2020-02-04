@@ -8,7 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Helper class to create a Symfony Response object from raw (legacy) header
- * and content data
+ * and content data.
  */
 class ResponseCaptureHelper
 {
@@ -32,7 +32,7 @@ class ResponseCaptureHelper
             $headerName = strtolower(trim($matches[1]));
             $headerValue = trim($matches[2]);
 
-            if ($headerName == 'set-cookie') {
+            if ('set-cookie' == $headerName) {
                 $cookies[] = self::createCookieFromString($headerValue);
             } else {
                 $responseHeaders[$headerName][] = $headerValue;
@@ -64,14 +64,14 @@ class ResponseCaptureHelper
         [$name, $value] = explode('=', array_shift($parts), 2);
 
         $values = [
-            'name'     => trim($name),
+            'name' => trim($name),
             // Cookie value must be decoded, otherwise it is encoded again when we forward it to the Symfony response.
             // That would lead to problems, for example with session cookies whose id can contain a comma.
-            'value'    => trim(urldecode($value)),
-            'expires'  => 0,
-            'path'     => '/',
-            'domain'   => '',
-            'secure'   => false,
+            'value' => trim(urldecode($value)),
+            'expires' => 0,
+            'path' => '/',
+            'domain' => '',
+            'secure' => false,
             'httponly' => false,
         ];
 
@@ -104,7 +104,7 @@ class ResponseCaptureHelper
                 continue;
             }
 
-            if (2 === count($elements = explode('=', $part, 2))) {
+            if (2 === \count($elements = explode('=', $part, 2))) {
                 if ('expires' === strtolower($elements[0])) {
                     $elements[1] = self::parseDate($elements[1]);
                 }
@@ -127,7 +127,7 @@ class ResponseCaptureHelper
     private static function parseDate($dateValue)
     {
         // trim single quotes around date if present
-        if (($length = strlen($dateValue)) > 1 && "'" === $dateValue[0] && "'" === $dateValue[$length - 1]) {
+        if (($length = \strlen($dateValue)) > 1 && "'" === $dateValue[0] && "'" === $dateValue[$length - 1]) {
             $dateValue = substr($dateValue, 1, -1);
         }
 

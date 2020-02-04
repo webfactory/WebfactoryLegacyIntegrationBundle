@@ -17,7 +17,6 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class IgnoreRedirect extends PassthruLegacyResponseFilter
 {
-
     protected function check(Response $response)
     {
         return $response->isRedirect();

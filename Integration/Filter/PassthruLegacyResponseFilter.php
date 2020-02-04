@@ -21,7 +21,6 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterf
  */
 class PassthruLegacyResponseFilter implements FilterInterface
 {
-
     public function filter(FilterControllerEvent $event, Response $response)
     {
         if ($this->check($response)) {

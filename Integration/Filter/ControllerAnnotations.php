@@ -16,7 +16,6 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterf
 
 class ControllerAnnotations implements FilterInterface
 {
-
     protected $reader;
     protected $container;
 
@@ -28,7 +27,7 @@ class ControllerAnnotations implements FilterInterface
 
     public function filter(FilterControllerEvent $event, Response $response)
     {
-        if (!is_array($controller = $event->getController())) {
+        if (!\is_array($controller = $event->getController())) {
             return;
         }
 
@@ -38,8 +37,9 @@ class ControllerAnnotations implements FilterInterface
         foreach ($this->reader->getMethodAnnotations($method) as $annotation) {
             if ($annotation instanceof Factory) {
                 $annotation->createFilter($this->container)->filter($event, $response);
-                if ($event->isPropagationStopped())
+                if ($event->isPropagationStopped()) {
                     break;
+                }
             }
         }
     }

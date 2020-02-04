@@ -1,6 +1,4 @@
-# IDE
-/.idea/
+vendor/
+composer.lock
+.php_cs.cache
 
-# Composer
-/vendor/
-/composer.lock

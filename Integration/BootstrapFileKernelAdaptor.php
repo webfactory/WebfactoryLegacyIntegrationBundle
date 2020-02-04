@@ -13,7 +13,6 @@ use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class BootstrapFileKernelAdaptor implements HttpKernelInterface
 {
-
     protected $file;
 
     public function __construct($filename)
@@ -24,10 +23,11 @@ class BootstrapFileKernelAdaptor implements HttpKernelInterface
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
         $file = $this->file;
+
         return LegacyCaptureResponseFactory::create(function () use ($file, $request) {
-            $status = include($file);
-            
-            if ($status != 1) {
+            $status = include $file;
+
+            if (1 != $status) {
                 return $status;
             }
         });

@@ -30,14 +30,14 @@ class LegacyCaptureResponseFactory
     {
         ob_start();
         try {
-            $statusCode = call_user_func($legacyExecutionCallback);
+            $statusCode = \call_user_func($legacyExecutionCallback);
             $content = ob_get_contents();
         } finally {
             ob_end_clean();
         }
 
-        if ($statusCode === null) {
-            if (function_exists('http_response_code')) {
+        if (null === $statusCode) {
+            if (\function_exists('http_response_code')) {
                 $statusCode = http_response_code();
             } else {
                 $statusCode = 200;

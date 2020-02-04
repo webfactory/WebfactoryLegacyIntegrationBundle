@@ -17,7 +17,6 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
 class LegacyApplicationDispatchingEventListener
 {
-
     protected $container;
     protected $reader;
     protected $stopwatch;
@@ -25,7 +24,7 @@ class LegacyApplicationDispatchingEventListener
     /**
      * @var Filter[]
      */
-    protected $filters = array();
+    protected $filters = [];
 
     public function __construct(ContainerInterface $container, Reader $reader)
     {
@@ -40,7 +39,7 @@ class LegacyApplicationDispatchingEventListener
 
     public function onKernelController(FilterControllerEvent $event)
     {
-        if (!is_array($controller = $event->getController())) {
+        if (!\is_array($controller = $event->getController())) {
             return;
         }
 
@@ -56,7 +55,6 @@ class LegacyApplicationDispatchingEventListener
         }
 
         if ($dispatch) {
-
             $response = $this->getLegacyApplication()->handle($event->getRequest(), $event->getRequestType(), false);
 
             foreach ($this->filters as $filter) {
@@ -76,4 +74,3 @@ class LegacyApplicationDispatchingEventListener
         return $this->container->get('webfactory_legacy_integration.legacy_application');
     }
 }
-

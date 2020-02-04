@@ -40,7 +40,7 @@ class XPathHelperFactory
         try {
             return new XPathHelper($this->parser, $content);
         } catch (ParsingException $exception) {
-            if (function_exists('tidy_repair_string')) {
+            if (\function_exists('tidy_repair_string')) {
                 $this->logger->notice('Failed parsing the legacy response as XHTML, trying to clean up with Tidy.', ['exception' => $exception, 'legacy_response' => $exception->getXmlInput()]);
 
                 return new XPathHelper($this->parser, tidy_repair_string($content, ['output-xhtml' => true, 'wrap' => 0], 'utf8'));

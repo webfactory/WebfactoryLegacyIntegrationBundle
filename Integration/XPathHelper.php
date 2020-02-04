@@ -12,7 +12,6 @@ use Webfactory\Dom\BaseParsingHelper;
 
 class XPathHelper
 {
-
     protected $parser;
     protected $document;
 
@@ -25,6 +24,7 @@ class XPathHelper
     public function getFragment($expression)
     {
         $xpath = $this->parser->createXPath($this->document);
+
         return $this->parser->dump($xpath->query($expression));
     }
 }

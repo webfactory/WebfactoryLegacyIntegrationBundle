@@ -17,7 +17,6 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\PassthruLegacyR
  */
 class Passthru implements Factory
 {
-
     public function createFilter(Container $container)
     {
         return new PassthruLegacyResponseFilter();

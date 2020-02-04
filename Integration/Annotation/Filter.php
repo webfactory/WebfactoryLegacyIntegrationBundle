@@ -17,7 +17,6 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
  */
 class Filter implements Factory
 {
-
     protected $class;
     protected $service;
 
@@ -29,24 +28,29 @@ class Filter implements Factory
         if (isset($values['service'])) {
             $this->service = $values['service'];
         }
-        if (!$this->class && !$this->service)
+        if (!$this->class && !$this->service) {
             throw new \Exception('Parameter "class" or "service" is missing in Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter.');
+        }
     }
 
     public function createFilter(Container $container)
     {
         if ($class = $this->class) {
-            if (!class_exists($class))
-                throw new \Exception('Unknown class ' . $class . ' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
+            if (!class_exists($class)) {
+                throw new \Exception('Unknown class '.$class.' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
+            }
             $filter = new $class();
         }
         if ($service = $this->service) {
-            if (!$container->has($service))
-                throw new \Exception('Unknown service ' . $service . ' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
+            if (!$container->has($service)) {
+                throw new \Exception('Unknown service '.$service.' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
+            }
             $filter = $container->get($service);
         }
-        if (!$filter instanceof FilterInterface)
-            throw new \Exception("Class " . get_class($filter) . ' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation is not a Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter.');
+        if (!$filter instanceof FilterInterface) {
+            throw new \Exception('Class '.\get_class($filter).' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation is not a Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter.');
+        }
+
         return $filter;
     }
 }

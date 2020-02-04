@@ -15,7 +15,6 @@ use Twig\TwigFunction;
 
 class Extension extends AbstractExtension implements GlobalsInterface
 {
-
     protected $legacyApplication;
     protected $container;
 
@@ -28,17 +27,17 @@ class Extension extends AbstractExtension implements GlobalsInterface
 
     public function getFunctions()
     {
-        return array(
-            new TwigFunction('webfactory_legacy_integration_embed', array($this, 'embedString')),
-            new TwigFunction('webfactory_legacy_integration_embed_result', array($this, 'getEmbedResult'), array('is_safe' => array('html')))
-        );
+        return [
+            new TwigFunction('webfactory_legacy_integration_embed', [$this, 'embedString']),
+            new TwigFunction('webfactory_legacy_integration_embed_result', [$this, 'getEmbedResult'], ['is_safe' => ['html']]),
+        ];
     }
 
     public function getGlobals()
     {
-        return array(
-            'legacyApplication' => $this
-        );
+        return [
+            'legacyApplication' => $this,
+        ];
     }
 
     /** @deprecated */
@@ -51,6 +50,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
      * Evaluate $xpath search query on the legacy content and get a string representation of matching elements.
      *
      * @param string $xpath
+     *
      * @return string
      */
     public function xpath($xpath)
@@ -65,7 +65,7 @@ class Extension extends AbstractExtension implements GlobalsInterface
 
     public function embedString($needle, $content)
     {
-        if ($this->embedResult === null) {
+        if (null === $this->embedResult) {
             $legacyApp = $this->container->get('webfactory_legacy_integration.legacy_application');
             $this->embedResult = $legacyApp->getResponse()->getContent();
         }
