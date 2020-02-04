@@ -4,61 +4,51 @@
            xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
+        <defaults autowire="true" autoconfigure="true" />
 
         <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\BootstrapFileKernelAdaptor">
             <argument>%webfactory_legacy_integration.legacy_application_bootstrap_file%</argument>
         </service>
 
-        <service id="webfactory_legacy_integration.legacy_kernel"
-                 alias="Webfactory\Bundle\LegacyIntegrationBundle\Integration\BootstrapFileKernelAdaptor" />
+        <service id="webfactory_legacy_integration.legacy_kernel" alias="Webfactory\Bundle\LegacyIntegrationBundle\Integration\BootstrapFileKernelAdaptor" />
 
-        <service
-                id="webfactory_legacy_integration.legacy_application"
-                class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication"
-                public="true">
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication">
             <call method="setLegacyKernel">
                 <argument type="service" id="webfactory_legacy_integration.legacy_kernel" />
             </call>
         </service>
+        <service id="webfactory_legacy_integration.legacy_application" alias="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication" public="true" />
 
-        <service id="webfactory_legacy_integration.kernel_event_listener"
-                 class="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\LegacyApplicationDispatchingEventListener">
-            <argument type="service" id="service_container"/>
-            <argument type="service" id="annotation_reader"/>
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\EventListener\LegacyApplicationDispatchingEventListener">
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-210" />
         </service>
 
-        <service id="webfactory_legacy_integration.controller_annotations_filter" class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\ControllerAnnotations">
-            <argument type="service" id="annotation_reader"/>
-            <argument type="service" id="service_container"/>
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\ControllerAnnotations">
             <tag name="webfactory_legacy_integration.filter"/>
         </service>
 
-        <service id="webfactory_legacy_integration.keep_cookies_filter" class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\KeepCookiesAndHeadersFilter">
-            <argument type="service" id="annotation_reader"/>
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\KeepCookiesAndHeadersFilter">
             <tag name="webfactory_legacy_integration.filter"/>
             <tag name="kernel.event_listener" event="kernel.response"/>
         </service>
 
-        <service id="webfactory_legacy_integration.twig_extension" class="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">
-            <argument type="service" id="service_container"/>
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Twig\Extension">
             <tag name="twig.extension"/>
+            <tag name="container.service_subscriber" />
         </service>
 
-        <service id="webfactory_legacy_integration.xpath_helper_factory"
-                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelperFactory">
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelperFactory">
             <argument type="service">
                 <service class="%webfactory_legacy_integration.parser_class%"/>
             </argument>
-            <argument type="service" id="webfactory_legacy_integration.legacy_application"/>
+            <argument type="service" id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication"/>
             <argument type="service" id="logger" on-invalid="null" />
             <tag name="monolog.logger" channel="webfactory_legacy_integration" />
         </service>
 
-        <service id="webfactory_legacy_integration.xpath_helper" public="true"
-                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper">
-            <factory service="webfactory_legacy_integration.xpath_helper_factory" method="createHelper" />
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper">
+            <factory service="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelperFactory" method="createHelper" />
         </service>
-
+        <service id="webfactory_legacy_integration.xpath_helper" alias="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper" public="true" />
     </services>
 </container>

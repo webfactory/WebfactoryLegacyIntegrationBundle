@@ -27,10 +27,10 @@ class WebfactoryLegacyIntegrationExtension extends Extension
 
         switch (@$config['parsingMode']) {
             case 'html5':
-                $container->setParameter('webfactory_legacy_integration.parser_class', 'Webfactory\Dom\PolyglotHTML5ParsingHelper');
+                $container->setParameter('webfactory_legacy_integration.parser_class', Webfactory\Dom\PolyglotHTML5ParsingHelper::class);
                 break;
             case 'xhtml10':
-                $container->setParameter('webfactory_legacy_integration.parser_class', 'Webfactory\Dom\XHTML10ParsingHelper');
+                $container->setParameter('webfactory_legacy_integration.parser_class', Webfactory\Dom\XHTML10ParsingHelper::class);
                 break;
         }
     }

@@ -8,7 +8,7 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
 
@@ -33,7 +33,7 @@ class Filter implements Factory
         }
     }
 
-    public function createFilter(Container $container)
+    public function createFilter(ContainerInterface $container)
     {
         if ($class = $this->class) {
             if (!class_exists($class)) {

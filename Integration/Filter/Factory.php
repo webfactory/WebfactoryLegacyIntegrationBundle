@@ -8,9 +8,9 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 interface Factory
 {
-    public function createFilter(Container $container);
+    public function createFilter(ContainerInterface $container);
 }

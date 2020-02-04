@@ -8,17 +8,33 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Twig;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ServiceSubscriberInterface;
 use Twig\Extension\AbstractExtension;
 use Twig\Extension\GlobalsInterface;
 use Twig\TwigFunction;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper;
 
-class Extension extends AbstractExtension implements GlobalsInterface
+class Extension extends AbstractExtension implements GlobalsInterface, ServiceSubscriberInterface
 {
-    protected $legacyApplication;
-    protected $container;
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
 
-    protected $embedResult = null;
+    /**
+     * @var string
+     */
+    private $embedResult = null;
+
+    public static function getSubscribedServices()
+    {
+        return [
+            LegacyApplication::class,
+            XPathHelper::class,
+        ];
+    }
 
     public function __construct(ContainerInterface $container)
     {
@@ -58,15 +74,15 @@ class Extension extends AbstractExtension implements GlobalsInterface
         return $this->getXPathHelper()->getFragment($xpath);
     }
 
-    protected function getXPathHelper()
+    private function getXPathHelper()
     {
-        return $this->container->get('webfactory_legacy_integration.xpath_helper');
+        return $this->container->get(XPathHelper::class);
     }
 
     public function embedString($needle, $content)
     {
         if (null === $this->embedResult) {
-            $legacyApp = $this->container->get('webfactory_legacy_integration.legacy_application');
+            $legacyApp = $this->container->get(LegacyApplication::class);
             $this->embedResult = $legacyApp->getResponse()->getContent();
         }
 

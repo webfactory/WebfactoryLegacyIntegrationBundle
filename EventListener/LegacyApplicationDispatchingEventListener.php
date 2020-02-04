@@ -9,16 +9,20 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\HttpKernelInterface;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication;
 
 class LegacyApplicationDispatchingEventListener
 {
-    protected $container;
+    /**
+     * @var LegacyApplication
+     */
+    private $legacyApplication;
+
     protected $reader;
+
     protected $stopwatch;
 
     /**
@@ -26,9 +30,9 @@ class LegacyApplicationDispatchingEventListener
      */
     protected $filters = [];
 
-    public function __construct(ContainerInterface $container, Reader $reader)
+    public function __construct(LegacyApplication $legacyApplication, Reader $reader)
     {
-        $this->container = $container;
+        $this->legacyApplication = $legacyApplication;
         $this->reader = $reader;
     }
 
@@ -55,7 +59,7 @@ class LegacyApplicationDispatchingEventListener
         }
 
         if ($dispatch) {
-            $response = $this->getLegacyApplication()->handle($event->getRequest(), $event->getRequestType(), false);
+            $response = $this->legacyApplication->handle($event->getRequest(), $event->getRequestType(), false);
 
             foreach ($this->filters as $filter) {
                 $filter->filter($event, $response);
@@ -64,13 +68,5 @@ class LegacyApplicationDispatchingEventListener
                 }
             }
         }
-    }
-
-    /**
-     * @return HttpKernelInterface
-     */
-    protected function getLegacyApplication()
-    {
-        return $this->container->get('webfactory_legacy_integration.legacy_application');
     }
 }

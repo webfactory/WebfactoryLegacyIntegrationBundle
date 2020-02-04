@@ -8,7 +8,7 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\IgnoreRedirect as IgnoreRedirectFilter;
 
@@ -17,7 +17,7 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\IgnoreRedirect 
  */
 class IgnoreRedirect implements Factory
 {
-    public function createFilter(Container $container)
+    public function createFilter(ContainerInterface $container)
     {
         return new IgnoreRedirectFilter();
     }

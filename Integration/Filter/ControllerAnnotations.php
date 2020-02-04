@@ -9,7 +9,7 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
 use Doctrine\Common\Annotations\Reader;
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
@@ -19,7 +19,7 @@ class ControllerAnnotations implements FilterInterface
     protected $reader;
     protected $container;
 
-    public function __construct(Reader $reader, Container $container)
+    public function __construct(Reader $reader, ContainerInterface $container)
     {
         $this->reader = $reader;
         $this->container = $container;
