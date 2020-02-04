@@ -5,10 +5,20 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
     <services>
 
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\BootstrapFileKernelAdaptor">
+            <argument>%webfactory_legacy_integration.legacy_application_bootstrap_file%</argument>
+        </service>
+
+        <service id="webfactory_legacy_integration.legacy_kernel"
+                 alias="Webfactory\Bundle\LegacyIntegrationBundle\Integration\BootstrapFileKernelAdaptor" />
+
         <service
                 id="webfactory_legacy_integration.legacy_application"
                 class="Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication"
                 public="true">
+            <call method="setLegacyKernel">
+                <argument type="service" id="webfactory_legacy_integration.legacy_kernel" />
+            </call>
         </service>
 
         <service id="webfactory_legacy_integration.kernel_event_listener"

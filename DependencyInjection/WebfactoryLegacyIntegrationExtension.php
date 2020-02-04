@@ -35,17 +35,5 @@ class WebfactoryLegacyIntegrationExtension extends Extension
                 $container->setParameter('webfactory_legacy_integration.parser_class', 'Webfactory\Dom\XHTML10ParsingHelper');
                 break;
         }
-
-        if (isset($config['legacyApplicationBootstrapFile'])) {
-
-            $wrap = new Definition(
-                'Webfactory\Bundle\LegacyIntegrationBundle\Integration\BootstrapFileKernelAdaptor',
-                array($config['legacyApplicationBootstrapFile'])
-            );
-
-            $container
-                ->getDefinition('webfactory_legacy_integration.legacy_application')
-                ->addMethodCall('setLegacyKernel', array($wrap));
-        }
     }
 }
