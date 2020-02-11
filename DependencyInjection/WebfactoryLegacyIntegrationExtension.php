@@ -12,6 +12,8 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Webfactory\Dom\PolyglotHTML5ParsingHelper;
+use Webfactory\Dom\XHTML10ParsingHelper;
 
 class WebfactoryLegacyIntegrationExtension extends Extension
 {
@@ -27,10 +29,10 @@ class WebfactoryLegacyIntegrationExtension extends Extension
 
         switch (@$config['parsingMode']) {
             case 'html5':
-                $container->setParameter('webfactory_legacy_integration.parser_class', Webfactory\Dom\PolyglotHTML5ParsingHelper::class);
+                $container->setParameter('webfactory_legacy_integration.parser_class', PolyglotHTML5ParsingHelper::class);
                 break;
             case 'xhtml10':
-                $container->setParameter('webfactory_legacy_integration.parser_class', Webfactory\Dom\XHTML10ParsingHelper::class);
+                $container->setParameter('webfactory_legacy_integration.parser_class', XHTML10ParsingHelper::class);
                 break;
         }
     }
