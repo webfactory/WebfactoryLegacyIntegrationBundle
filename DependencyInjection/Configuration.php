@@ -15,8 +15,16 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $treeBuilder->root('webfactory_legacy_integration')
+        $treeBuilder = new TreeBuilder('webfactory_legacy_integration');
+
+        if (method_exists($treeBuilder, 'getRootNode')) {
+            $rootNode = $treeBuilder->getRootNode();
+        } else {
+            // BC layer for symfony/config 4.1 and older
+            $rootNode = $treeBuilder->root('webfactory_legacy_integration');
+        }
+ 
+        $rootNode
             ->children()
                 ->scalarNode('legacyApplicationBootstrapFile')->defaultValue('%project.webdir%/wfD2Engine.php')->end()
                 ->scalarNode('parsingMode')
