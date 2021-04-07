@@ -38,7 +38,7 @@ class LegacyCaptureResponseFactory
 
         if (null === $statusCode) {
             if (\function_exists('http_response_code')) {
-                $statusCode = http_response_code();
+                $statusCode = http_response_code() ?: 200;
             } else {
                 $statusCode = 200;
             }
