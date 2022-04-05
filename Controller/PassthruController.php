@@ -11,7 +11,7 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation as Legacy;
 
-class PassthruController extends Controller
+class PassthruController
 {
     /**
      * @Legacy\Dispatch

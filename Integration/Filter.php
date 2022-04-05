@@ -9,9 +9,9 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 
 interface Filter
 {
-    public function filter(FilterControllerEvent $event, Response $response);
+    public function filter(ControllerEvent $event, Response $response);
 }

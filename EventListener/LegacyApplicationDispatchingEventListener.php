@@ -9,7 +9,7 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 
 use Doctrine\Common\Annotations\Reader;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication;
@@ -41,7 +41,7 @@ class LegacyApplicationDispatchingEventListener
         $this->filters[] = $filter;
     }
 
-    public function onKernelController(FilterControllerEvent $event)
+    public function onKernelController(ControllerEvent $event)
     {
         if (!\is_array($controller = $event->getController())) {
             return;

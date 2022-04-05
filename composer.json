@@ -21,11 +21,12 @@
         "doctrine/annotations": "~1.0",
         "psr/container": "^1.0",
         "psr/log": "^1.0",
-        "symfony/config": "3.4.*|^4.0",
-        "symfony/dependency-injection": "3.4.*|^4.0",
+        "symfony/config": "^4.3",
+        "symfony/dependency-injection": "^4.2",
         "symfony/framework-bundle": "3.4.*|^4.0",
         "symfony/http-foundation": "3.4.*|^4.0",
-        "symfony/http-kernel": "3.4.*|^4.0",
+        "symfony/http-kernel": "^4.3",
+        "symfony/service-contracts": "^1.0|^2.0",
         "twig/twig": "^1.34|^2.0",
         "webfactory/dom": "~1.0, >= 1.0.15"
     }
