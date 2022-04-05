@@ -9,7 +9,7 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 
 /**
@@ -21,7 +21,7 @@ use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterf
  */
 class PassthruLegacyResponseFilter implements FilterInterface
 {
-    public function filter(FilterControllerEvent $event, Response $response)
+    public function filter(ControllerEvent $event, Response $response)
     {
         if ($this->check($response)) {
             $event->setController(function () use ($response) {

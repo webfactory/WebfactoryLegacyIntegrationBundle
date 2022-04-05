@@ -11,8 +11,8 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
-use Symfony\Component\HttpKernel\Event\FilterResponseEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
+use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\KeepCookies;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\KeepHeaders;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
@@ -36,7 +36,7 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
         $this->reader = $reader;
     }
 
-    public function filter(FilterControllerEvent $event, Response $response)
+    public function filter(ControllerEvent $event, Response $response)
     {
         if (!\is_array($controller = $event->getController())) {
             return;
@@ -56,7 +56,7 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
         }
     }
 
-    public function onKernelResponse(FilterResponseEvent $event)
+    public function onKernelResponse(ResponseEvent $event)
     {
         if (!$this->legacyResponse) {
             return;
