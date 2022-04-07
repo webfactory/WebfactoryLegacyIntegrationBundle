@@ -11,7 +11,7 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Event\FilterControllerEvent;
+use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 
 class ControllerAnnotations implements FilterInterface
@@ -25,7 +25,7 @@ class ControllerAnnotations implements FilterInterface
         $this->container = $container;
     }
 
-    public function filter(FilterControllerEvent $event, Response $response)
+    public function filter(ControllerEvent $event, Response $response)
     {
         if (!\is_array($controller = $event->getController())) {
             return;
