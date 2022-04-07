@@ -49,7 +49,7 @@ class Extension extends AbstractExtension implements GlobalsInterface, ServiceSu
         ];
     }
 
-    public function getGlobals()
+    public function getGlobals(): array
     {
         return [
             'legacyApplication' => $this,
