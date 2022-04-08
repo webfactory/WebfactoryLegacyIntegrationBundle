@@ -170,7 +170,7 @@ The `LegacyApplicationDispatchingEventListener` can take a set of _Filters_ whic
 must implement the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter interface.
 
 Once the legacy application has been executed, all registered filters are passed
-the `FilterControllerEvent` which triggered the event listener as well as the
+the `ControllerEvent` which triggered the event listener as well as the
 `Response` object that was created for the legacy application.
 
 The primary use case for this is to be able to examine the response and choose
