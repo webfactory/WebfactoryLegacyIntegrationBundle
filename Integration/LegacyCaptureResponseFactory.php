@@ -8,9 +8,11 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
+use Symfony\Component\HttpFoundation\Response;
+
 class LegacyCaptureResponseFactory
 {
-    public static function create($legacyExecutionCallback)
+    public static function create($legacyExecutionCallback): Response
     {
         // Preserve all headers that have previously been set (pre-Legacy startup)
         $preLegacyHeaders = headers_list();
@@ -26,7 +28,7 @@ class LegacyCaptureResponseFactory
         }
     }
 
-    private static function runLegacyAndCaptureResponse($legacyExecutionCallback)
+    private static function runLegacyAndCaptureResponse($legacyExecutionCallback): Response
     {
         ob_start();
         try {

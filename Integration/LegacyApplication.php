@@ -20,11 +20,14 @@ class LegacyApplication implements HttpKernelInterface
     /** @var HttpKernelInterface */
     protected $legacyKernel;
 
-    public function setLegacyKernel(HttpKernelInterface $kernel)
+    public function setLegacyKernel(HttpKernelInterface $kernel): void
     {
         $this->legacyKernel = $kernel;
     }
 
+    /**
+     * @return Response
+     */
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
         if (null === $this->response) {
@@ -35,13 +38,12 @@ class LegacyApplication implements HttpKernelInterface
         return $this->response;
     }
 
-    public function isDispatched()
+    public function isDispatched(): bool
     {
         return null !== $this->response;
     }
 
-    /** @return Response */
-    public function getResponse()
+    public function getResponse(): Response
     {
         if (null === $this->response) {
             throw new LegacyIntegrationException('The legacy application has not been started or has not generated a response. Maybe the @Dispatch annotation is missing for the current controller?');

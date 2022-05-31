@@ -9,6 +9,7 @@
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\HttpKernelInterface;
 
 class BootstrapFileKernelAdaptor implements HttpKernelInterface
@@ -20,6 +21,9 @@ class BootstrapFileKernelAdaptor implements HttpKernelInterface
         $this->file = $filename;
     }
 
+    /**
+     * @return Response
+     */
     public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
     {
         $file = $this->file;
