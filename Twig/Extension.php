@@ -28,7 +28,7 @@ class Extension extends AbstractExtension implements GlobalsInterface, ServiceSu
      */
     private $embedResult = null;
 
-    public static function getSubscribedServices()
+    public static function getSubscribedServices(): array
     {
         return [
             LegacyApplication::class,
@@ -41,7 +41,7 @@ class Extension extends AbstractExtension implements GlobalsInterface, ServiceSu
         $this->container = $container;
     }
 
-    public function getFunctions()
+    public function getFunctions(): array
     {
         return [
             new TwigFunction('webfactory_legacy_integration_embed', [$this, 'embedString']),
@@ -66,10 +66,8 @@ class Extension extends AbstractExtension implements GlobalsInterface, ServiceSu
      * Evaluate $xpath search query on the legacy content and get a string representation of matching elements.
      *
      * @param string $xpath
-     *
-     * @return string
      */
-    public function xpath($xpath)
+    public function xpath($xpath): string
     {
         return $this->getXPathHelper()->getFragment($xpath);
     }
