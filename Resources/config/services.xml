@@ -50,5 +50,7 @@
             <factory service="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelperFactory" method="createHelper" />
         </service>
         <service id="webfactory_legacy_integration.xpath_helper" alias="Webfactory\Bundle\LegacyIntegrationBundle\Integration\XPathHelper" public="true" />
+
+        <service id="Symfony\Component\DependencyInjection\ContainerInterface" alias="service_container"/>
     </services>
 </container>
