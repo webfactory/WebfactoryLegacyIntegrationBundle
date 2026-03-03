@@ -24,7 +24,7 @@ class BootstrapFileKernelAdaptor implements HttpKernelInterface
     /**
      * @return Response
      */
-    public function handle(Request $request, $type = HttpKernelInterface::MASTER_REQUEST, $catch = true)
+    public function handle(Request $request, $type = HttpKernelInterface::MAIN_REQUEST, $catch = true): Response
     {
         $file = $this->file;
 
