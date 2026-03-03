@@ -25,6 +25,8 @@
 
         <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\ControllerAnnotations">
             <tag name="webfactory_legacy_integration.filter"/>
+            <argument type="service" id="Doctrine\Common\Annotations\Reader"/>
+            <argument type="service" id="service_container"/>
         </service>
 
         <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\KeepCookiesAndHeadersFilter">
