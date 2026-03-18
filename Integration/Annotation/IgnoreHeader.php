@@ -8,27 +8,24 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\IgnoreHeader as IgnoreHeaderFilter;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\IgnoreHeader as IgnoreHeaderAttribute;
 
 /**
  * @Annotation
+ * @deprecated Use the attribute instead.
  */
-class IgnoreHeader implements Factory
+class IgnoreHeader extends IgnoreHeaderAttribute
 {
-    protected $header;
-
     public function __construct(array $values)
     {
-        $this->header = array_shift($values);
-        if (!\is_string($this->header)) {
-            throw new \Exception("Please define a header with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\IgnoreHeader annotation.");
-        }
-    }
+        trigger_deprecation(
+            'webfactory/legacy-integration-bundle',
+            '2.4.0',
+            'The %s annotation has been deprecated, use the %s attribute instead.',
+            __CLASS__,
+            IgnoreHeaderAttribute::class
+        );
 
-    public function createFilter(ContainerInterface $container)
-    {
-        return new IgnoreHeaderFilter($this->header);
+        parent::__construct($values['value']);
     }
 }

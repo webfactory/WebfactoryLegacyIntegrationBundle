@@ -8,17 +8,22 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\PassthruLegacyResponseFilter;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\Passthru as PassthruAttribute;
 
 /**
  * @Annotation
+ * @deprecated Use the attribute instead.
  */
-class Passthru implements Factory
+class Passthru extends PassthruAttribute
 {
-    public function createFilter(ContainerInterface $container)
+    public function __construct()
     {
-        return new PassthruLegacyResponseFilter();
+        trigger_deprecation(
+            'webfactory/legacy-integration-bundle',
+            '2.4.0',
+            'The %s annotation has been deprecated, use the %s attribute instead.',
+            __CLASS__,
+            PassthruAttribute::class
+        );
     }
 }

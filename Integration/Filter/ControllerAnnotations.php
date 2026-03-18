@@ -38,8 +38,15 @@ class ControllerAnnotations implements FilterInterface
             if ($annotation instanceof Factory) {
                 $annotation->createFilter($this->container)->filter($event, $response);
                 if ($event->isPropagationStopped()) {
-                    break;
+                    return;
                 }
+            }
+        }
+
+        foreach ($method->getAttributes(Factory::class, \ReflectionAttribute::IS_INSTANCEOF) as $attribute) {
+            $attribute->newInstance()->createFilter($this->container)->filter($event, $response);
+            if ($event->isPropagationStopped()) {
+                return;
             }
         }
     }

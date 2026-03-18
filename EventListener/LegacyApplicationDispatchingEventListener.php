@@ -11,6 +11,7 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\Dispatch as DispatchAttribute;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication;
 
@@ -56,6 +57,10 @@ class LegacyApplicationDispatchingEventListener
                 $dispatch = true;
                 break;
             }
+        }
+
+        if (!$dispatch && $method->getAttributes(DispatchAttribute::class)) {
+            $dispatch = true;
         }
 
         if ($dispatch) {

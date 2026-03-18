@@ -8,15 +8,22 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\KeepHeaders as KeepHeadersAttribute;
+
 /**
  * @Annotation
+ * @deprecated Use the attribute instead.
  */
-class KeepHeaders
+class KeepHeaders extends KeepHeadersAttribute
 {
-    public $value;
-
-    public function shouldKeep($name)
+    public function __construct()
     {
-        return null === $this->value || \in_array($name, $this->value);
+        trigger_deprecation(
+            'webfactory/legacy-integration-bundle',
+            '2.4.0',
+            'The %s annotation has been deprecated, use the %s attribute instead.',
+            __CLASS__,
+            KeepHeadersAttribute::class
+        );
     }
 }
