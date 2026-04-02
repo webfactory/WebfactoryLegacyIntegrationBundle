@@ -8,17 +8,22 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\Factory;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\IgnoreRedirect as IgnoreRedirectFilter;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\IgnoreRedirect as IgnoreRedirectAttribute;
 
 /**
  * @Annotation
+ * @deprecated Use the attribute instead.
  */
-class IgnoreRedirect implements Factory
+class IgnoreRedirect extends IgnoreRedirectAttribute
 {
-    public function createFilter(ContainerInterface $container)
+    public function __construct()
     {
-        return new IgnoreRedirectFilter();
+        trigger_deprecation(
+            'webfactory/legacy-integration-bundle',
+            '2.4.0',
+            'The %s annotation has been deprecated, use the %s attribute instead.',
+            __CLASS__,
+            IgnoreRedirectAttribute::class
+        );
     }
 }

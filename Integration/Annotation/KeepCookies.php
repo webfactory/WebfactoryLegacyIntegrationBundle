@@ -8,15 +8,22 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation;
 
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\KeepCookies as KeepCookiesAttribute;
+
 /**
  * @Annotation
+ * @deprecated Use the attribute instead.
  */
-class KeepCookies
+class KeepCookies extends KeepCookiesAttribute
 {
-    public $value;
-
-    public function shouldKeep($name)
+    public function __construct()
     {
-        return null === $this->value || \in_array($name, $this->value);
+        trigger_deprecation(
+            'webfactory/legacy-integration-bundle',
+            '2.4.0',
+            'The %s annotation has been deprecated, use the %s attribute instead.',
+            __CLASS__,
+            KeepCookiesAttribute::class
+        );
     }
 }

@@ -15,6 +15,8 @@ use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\KeepCookies;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\KeepHeaders;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\KeepCookies as KeepCookiesAttribute;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\KeepHeaders as KeepHeadersAttribute;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 
 class KeepCookiesAndHeadersFilter implements FilterInterface
@@ -25,10 +27,10 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
     /** @var Response */
     private $legacyResponse;
 
-    /** @var KeepHeaders */
+    /** @var KeepHeadersAttribute */
     private $keepHeadersAnnotation;
 
-    /** @var KeepCookies */
+    /** @var KeepCookiesAttribute */
     private $keepCookiesAnnotation;
 
     public function __construct(Reader $reader)
@@ -53,6 +55,14 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
             } elseif ($annotation instanceof KeepCookies) {
                 $this->keepCookiesAnnotation = $annotation;
             }
+        }
+
+        foreach ($method->getAttributes(KeepHeadersAttribute::class) as $attribute) {
+            $this->keepHeadersAnnotation = $attribute->newInstance();
+        }
+
+        foreach ($method->getAttributes(KeepCookiesAttribute::class) as $attribute) {
+            $this->keepCookiesAnnotation = $attribute->newInstance();
         }
     }
 
