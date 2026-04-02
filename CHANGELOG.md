@@ -1,6 +1,9 @@
 Changelog
 =========
 
+## Version 2.4.0
+* Add support for PHP 8 attributes
+
 ## Version 2.0
 
 * `\Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter` now requires `\Symfony\Component\HttpKernel\Event\ControllerEvent` as the event
