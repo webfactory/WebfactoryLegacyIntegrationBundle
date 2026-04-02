@@ -23,7 +23,7 @@
             <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" priority="-210" />
         </service>
 
-        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\ControllerAnnotations">
+        <service id="Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter\ControllerAttributes">
             <tag name="webfactory_legacy_integration.filter"/>
         </service>
 
