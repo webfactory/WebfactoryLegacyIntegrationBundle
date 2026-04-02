@@ -8,10 +8,8 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\EventListener;
 
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Dispatch;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\Dispatch as DispatchAttribute;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\Dispatch;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\LegacyApplication;
 
@@ -22,8 +20,6 @@ class LegacyApplicationDispatchingEventListener
      */
     private $legacyApplication;
 
-    protected $reader;
-
     protected $stopwatch;
 
     /**
@@ -31,10 +27,9 @@ class LegacyApplicationDispatchingEventListener
      */
     protected $filters = [];
 
-    public function __construct(LegacyApplication $legacyApplication, Reader $reader)
+    public function __construct(LegacyApplication $legacyApplication)
     {
         $this->legacyApplication = $legacyApplication;
-        $this->reader = $reader;
     }
 
     public function addFilter(Filter $filter)
@@ -51,26 +46,16 @@ class LegacyApplicationDispatchingEventListener
         $object = new \ReflectionObject($controller[0]);
         $method = $object->getMethod($controller[1]);
 
-        $dispatch = false;
-        foreach ($this->reader->getMethodAnnotations($method) as $configuration) {
-            if ($configuration instanceof Dispatch) {
-                $dispatch = true;
+        if (!$method->getAttributes(Dispatch::class)) {
+            return;
+        }
+
+        $response = $this->legacyApplication->handle($event->getRequest(), $event->getRequestType(), false);
+
+        foreach ($this->filters as $filter) {
+            $filter->filter($event, $response);
+            if ($event->isPropagationStopped()) {
                 break;
-            }
-        }
-
-        if (!$dispatch && $method->getAttributes(DispatchAttribute::class)) {
-            $dispatch = true;
-        }
-
-        if ($dispatch) {
-            $response = $this->legacyApplication->handle($event->getRequest(), $event->getRequestType(), false);
-
-            foreach ($this->filters as $filter) {
-                $filter->filter($event, $response);
-                if ($event->isPropagationStopped()) {
-                    break;
-                }
             }
         }
     }

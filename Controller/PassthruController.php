@@ -8,15 +8,12 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation as Legacy;
+use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute as Legacy;
 
 class PassthruController
 {
-    /**
-     * @Legacy\Dispatch
-     * @Legacy\Passthru
-     */
+    #[Legacy\Dispatch]
+    #[Legacy\Passthru]
     public function indexAction()
     {
     }

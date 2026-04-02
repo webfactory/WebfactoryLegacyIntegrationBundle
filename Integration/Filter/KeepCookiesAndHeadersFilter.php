@@ -8,35 +8,24 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Symfony\Component\HttpKernel\Event\ResponseEvent;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\KeepCookies;
-use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\KeepHeaders;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\KeepCookies as KeepCookiesAttribute;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Attribute\KeepHeaders as KeepHeadersAttribute;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 
 class KeepCookiesAndHeadersFilter implements FilterInterface
 {
-    /** @var Reader */
-    private $reader;
-
     /** @var Response */
     private $legacyResponse;
 
     /** @var KeepHeadersAttribute */
-    private $keepHeadersAnnotation;
+    private $keepHeaders;
 
     /** @var KeepCookiesAttribute */
-    private $keepCookiesAnnotation;
-
-    public function __construct(Reader $reader)
-    {
-        $this->reader = $reader;
-    }
+    private $keepCookies;
 
     public function filter(ControllerEvent $event, Response $response)
     {
@@ -49,20 +38,12 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
         $object = new \ReflectionObject($controller[0]);
         $method = $object->getMethod($controller[1]);
 
-        foreach ($this->reader->getMethodAnnotations($method) as $annotation) {
-            if ($annotation instanceof KeepHeaders) {
-                $this->keepHeadersAnnotation = $annotation;
-            } elseif ($annotation instanceof KeepCookies) {
-                $this->keepCookiesAnnotation = $annotation;
-            }
-        }
-
         foreach ($method->getAttributes(KeepHeadersAttribute::class) as $attribute) {
-            $this->keepHeadersAnnotation = $attribute->newInstance();
+            $this->keepHeaders = $attribute->newInstance();
         }
 
         foreach ($method->getAttributes(KeepCookiesAttribute::class) as $attribute) {
-            $this->keepCookiesAnnotation = $attribute->newInstance();
+            $this->keepCookies = $attribute->newInstance();
         }
     }
 
@@ -75,9 +56,9 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
         $response = $event->getResponse();
         $legacyHeaders = $this->legacyResponse->headers;
 
-        if ($this->keepHeadersAnnotation) {
+        if ($this->keepHeaders) {
             foreach ($legacyHeaders->all() as $name => $values) {
-                if ($this->keepHeadersAnnotation->shouldKeep($name)) {
+                if ($this->keepHeaders->shouldKeep($name)) {
                     foreach ($values as $value) {
                         $response->headers->set($name, $value);
                     }
@@ -85,10 +66,10 @@ class KeepCookiesAndHeadersFilter implements FilterInterface
             }
         }
 
-        if ($this->keepCookiesAnnotation) {
+        if ($this->keepCookies) {
             foreach ($legacyHeaders->getCookies() as $cookie) {
                 /** @var Cookie $cookie */
-                if ($this->keepCookiesAnnotation->shouldKeep($cookie->getName())) {
+                if ($this->keepCookies->shouldKeep($cookie->getName())) {
                     $response->headers->setCookie($cookie);
                 }
             }
