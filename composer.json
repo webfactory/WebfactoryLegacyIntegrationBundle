@@ -18,7 +18,6 @@
 
     "require": {
         "ext-tidy": "*",
-        "doctrine/annotations": "~1.0",
         "psr/container": "^1.0",
         "psr/log": "^1.0",
         "symfony/config": "^4.3|^5.0|^6.0|^7.0",
@@ -31,6 +30,6 @@
         "webfactory/dom": "~1.0, >= 1.0.15"
     },
     "conflict": {
-        "php": "<7.0"
+        "php": " < 8.0"
     }
 }

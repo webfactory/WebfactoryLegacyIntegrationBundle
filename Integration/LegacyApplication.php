@@ -46,7 +46,7 @@ class LegacyApplication implements HttpKernelInterface
     public function getResponse(): Response
     {
         if (null === $this->response) {
-            throw new LegacyIntegrationException('The legacy application has not been started or has not generated a response. Maybe the @Dispatch annotation is missing for the current controller?');
+            throw new LegacyIntegrationException('The legacy application has not been started or has not generated a response. Maybe the #[Dispatch] attribute is missing for the current controller?');
         }
 
         return $this->response;

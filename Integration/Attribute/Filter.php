@@ -25,7 +25,7 @@ class Filter implements Factory
         $this->service = $service;
 
         if (!$this->class && !$this->service) {
-            throw new \Exception('Parameter "class" or "service" is missing in Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter.');
+            throw new \Exception('Parameter "class" or "service" is missing in '.self::class.'.');
         }
     }
 
@@ -33,20 +33,20 @@ class Filter implements Factory
     {
         if ($class = $this->class) {
             if (!class_exists($class)) {
-                throw new \Exception('Unknown class '.$class.' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
+                throw new \Exception('Unknown class '.$class.' configured with the '.self::class.' attribute.');
             }
             $filter = new $class();
         }
 
         if ($service = $this->service) {
             if (!$container->has($service)) {
-                throw new \Exception('Unknown service '.$service.' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation.');
+                throw new \Exception('Unknown service '.$service.' configured with the '.self::class.' attribute.');
             }
             $filter = $container->get($service);
         }
 
         if (!$filter instanceof FilterInterface) {
-            throw new \Exception('Class '.\get_class($filter).' configured with the Webfactory\Bundle\LegacyIntegrationBundle\Integration\Annotation\Filter annotation is not a Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter.');
+            throw new \Exception('Class '.\get_class($filter).' configured with the '.self::class.' attribute is not a '.FilterInterface::class.'.');
         }
 
         return $filter;

@@ -8,20 +8,17 @@
 
 namespace Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter;
 
-use Doctrine\Common\Annotations\Reader;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ControllerEvent;
 use Webfactory\Bundle\LegacyIntegrationBundle\Integration\Filter as FilterInterface;
 
-class ControllerAnnotations implements FilterInterface
+class ControllerAttributes implements FilterInterface
 {
-    protected $reader;
     protected $container;
 
-    public function __construct(Reader $reader, ContainerInterface $container)
+    public function __construct(ContainerInterface $container)
     {
-        $this->reader = $reader;
         $this->container = $container;
     }
 
@@ -33,15 +30,6 @@ class ControllerAnnotations implements FilterInterface
 
         $object = new \ReflectionObject($controller[0]);
         $method = $object->getMethod($controller[1]);
-
-        foreach ($this->reader->getMethodAnnotations($method) as $annotation) {
-            if ($annotation instanceof Factory) {
-                $annotation->createFilter($this->container)->filter($event, $response);
-                if ($event->isPropagationStopped()) {
-                    return;
-                }
-            }
-        }
 
         foreach ($method->getAttributes(Factory::class, \ReflectionAttribute::IS_INSTANCEOF) as $attribute) {
             $attribute->newInstance()->createFilter($this->container)->filter($event, $response);

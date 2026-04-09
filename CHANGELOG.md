@@ -1,8 +1,15 @@
 Changelog
 =========
 
+## Version 3.0.0
+
+* Removed Doctrine annotation support. Use PHP 8 attributes instead.
+* Removed `doctrine/annotations` dependency.
+* PHP 8.0 is now the minimum required version.
+
 ## Version 2.4.0
-* Add support for PHP 8 attributes
+
+* Added PHP 8 attributes as an alternative to Doctrine annotations (deprecated).
 
 ## Version 2.0
 
