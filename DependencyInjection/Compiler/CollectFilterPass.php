@@ -15,7 +15,7 @@ use Webfactory\Bundle\LegacyIntegrationBundle\EventListener\LegacyApplicationDis
 
 class CollectFilterPass implements CompilerPassInterface
 {
-    public function process(ContainerBuilder $container)
+    public function process(ContainerBuilder $container): void
     {
         $kernelEventListenerDefinition = $container->getDefinition(LegacyApplicationDispatchingEventListener::class);
 
