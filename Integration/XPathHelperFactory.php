@@ -26,7 +26,7 @@ class XPathHelperFactory
      */
     private $logger;
 
-    public function __construct(BaseParsingHelper $parser, LegacyApplication $legacy, LoggerInterface $logger = null)
+    public function __construct(BaseParsingHelper $parser, LegacyApplication $legacy, ?LoggerInterface $logger = null)
     {
         $this->parser = $parser;
         $this->legacyApplication = $legacy;

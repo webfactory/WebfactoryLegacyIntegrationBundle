@@ -1,6 +1,11 @@
 Changelog
 =========
 
+## Version 3.2.0
+
+* Added support for Symfony 8.
+* The service configuration is now written in PHP instead of XML, since Symfony 8 removed the XML loader.
+
 ## Version 3.0.0
 
 * Removed Doctrine annotation support. Use PHP 8 attributes instead.
