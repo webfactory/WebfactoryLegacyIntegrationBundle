@@ -10,8 +10,8 @@ namespace Webfactory\Bundle\LegacyIntegrationBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
-use Symfony\Component\HttpKernel\DependencyInjection\Extension;
+use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Loader\PhpFileLoader;
 use Webfactory\Dom\PolyglotHTML5ParsingHelper;
 use Webfactory\Dom\XHTML10ParsingHelper;
 
@@ -24,8 +24,8 @@ class WebfactoryLegacyIntegrationExtension extends Extension
 
         $container->setParameter('webfactory_legacy_integration.legacy_application_bootstrap_file', $config['legacyApplicationBootstrapFile']);
 
-        $loader = new XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
-        $loader->load('services.xml');
+        $loader = new PhpFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
+        $loader->load('services.php');
 
         switch (@$config['parsingMode']) {
             case 'html5':
